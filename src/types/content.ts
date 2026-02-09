@@ -19,6 +19,16 @@ export interface ProcessStep {
   description: string;
 }
 
+export interface EngagementModel {
+  title: string;
+  description: string;
+  timeline: string;
+  bestFor: string;
+  deliverables: string[];
+  ctaLabel: string;
+  ctaHref: string;
+}
+
 export interface TeamMemberStub {
   displayName: string;
   role: string;

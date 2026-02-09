@@ -1,4 +1,5 @@
 import {
+  type EngagementModel,
   type FaqItem,
   type PortfolioItem,
   type ProcessStep,
@@ -124,6 +125,39 @@ export const processSteps: ProcessStep[] = [
   {
     title: 'Scale',
     description: 'Iterate with analytics, SEO/AIEO improvements, and growth-focused updates.'
+  }
+];
+
+export const engagementModels: EngagementModel[] = [
+  {
+    title: 'Sprint Build',
+    description:
+      'A focused build sprint for a high-impact website, app module, or launch-ready prototype.',
+    timeline: '2-4 Weeks',
+    bestFor: 'Teams needing speed and a clearly scoped deliverable.',
+    deliverables: ['Scoping + architecture', 'Production implementation', 'Launch-ready handoff'],
+    ctaLabel: 'Plan a Sprint',
+    ctaHref: '#contact'
+  },
+  {
+    title: 'Product Launch',
+    description:
+      'End-to-end design and development for a major release with launch positioning and tracking.',
+    timeline: '6-10 Weeks',
+    bestFor: 'Businesses shipping a new product or rebuilding their digital foundation.',
+    deliverables: ['Brand-aligned UI system', 'Web/mobile/game build', 'Analytics + SEO/AIEO setup'],
+    ctaLabel: 'Start a Launch',
+    ctaHref: '#contact'
+  },
+  {
+    title: 'Growth Partner',
+    description:
+      'Ongoing collaboration for iterative improvements, growth experiments, and technical consulting.',
+    timeline: 'Monthly',
+    bestFor: 'Teams that want a consistent product and growth execution partner.',
+    deliverables: ['Prioritized backlog execution', 'Conversion + retention experiments', 'Performance tuning'],
+    ctaLabel: 'Discuss Retainer',
+    ctaHref: '#contact'
   }
 ];
 

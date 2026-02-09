@@ -6,6 +6,7 @@ import { ScrollProgressIndicator } from './components/layout/ScrollProgressIndic
 import { SiteFooter } from './components/layout/SiteFooter';
 import { SiteHeader } from './components/layout/SiteHeader';
 import { ContactSection } from './components/sections/ContactSection';
+import { EngagementSection } from './components/sections/EngagementSection';
 import { FaqSection } from './components/sections/FaqSection';
 import { HeroSection } from './components/sections/HeroSection';
 import { PortfolioSection } from './components/sections/PortfolioSection';
@@ -22,6 +23,7 @@ function App() {
       <SiteHeader />
       <HeroSection />
       <ServicesSection />
+      <EngagementSection />
       <PortfolioSection />
       <ProcessSection />
       <TestimonialsSection />

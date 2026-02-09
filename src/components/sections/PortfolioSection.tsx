@@ -1,9 +1,27 @@
-import { Box, Chip, Container, Link, Stack, Typography } from '@mui/material';
+import { useMemo, useState } from 'react';
+import { Box, Button, Chip, Container, Link, Stack, Typography } from '@mui/material';
 import { motion } from 'framer-motion';
 import { portfolioItems } from '../../content/siteContent';
 import { triggerHaptic } from '../../lib/haptics';
+import { type PortfolioCategory } from '../../types/content';
+
+type PortfolioFilter = 'all' | PortfolioCategory;
+
+const portfolioFilters: Array<{ id: PortfolioFilter; label: string }> = [
+  { id: 'all', label: 'All Work' },
+  { id: 'products', label: 'Products' },
+  { id: 'clients', label: 'Client Work' },
+  { id: 'experiments', label: 'Experiments' }
+];
 
 export function PortfolioSection() {
+  const [activeFilter, setActiveFilter] = useState<PortfolioFilter>('all');
+
+  const visibleItems = useMemo(
+    () => (activeFilter === 'all' ? portfolioItems : portfolioItems.filter((item) => item.category === activeFilter)),
+    [activeFilter]
+  );
+
   return (
     <Box component="section" id="portfolio" sx={{ py: { xs: 8, md: 10 } }}>
       <Container maxWidth="xl">
@@ -15,6 +33,22 @@ export function PortfolioSection() {
           Real projects spanning community products, analytics tools, and client websites.
         </Typography>
 
+        <Stack direction="row" spacing={1} flexWrap="wrap" useFlexGap sx={{ mb: 3 }}>
+          {portfolioFilters.map((filter) => (
+            <Button
+              key={filter.id}
+              size="small"
+              variant={activeFilter === filter.id ? 'contained' : 'outlined'}
+              color="primary"
+              onPointerDown={() => triggerHaptic('light')}
+              onClick={() => setActiveFilter(filter.id)}
+              sx={{ textTransform: 'none', borderRadius: 999, px: 1.8 }}
+            >
+              {filter.label}
+            </Button>
+          ))}
+        </Stack>
+
         <Box
           sx={{
             display: { xs: 'flex', md: 'grid' },
@@ -25,7 +59,7 @@ export function PortfolioSection() {
             gap: 2
           }}
         >
-          {portfolioItems.map((item, index) => (
+          {visibleItems.map((item, index) => (
             <Box
               key={item.title}
               component={motion.article}
