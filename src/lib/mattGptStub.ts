@@ -1,3 +1,3 @@
 export function mattGptStubResponse(): string {
-  return 'ChatGPT integration coming soon. MattGPT is currently a UI-only stub.';
+  return 'MattGPT will answer questions about services and portfolio work, plus project scoping Q&A. ChatGPT integration is coming soon.';
 }

@@ -18,6 +18,10 @@ export const navLinks = [
   { label: 'Contact', href: '#contact' }
 ] as const;
 
+export const primaryCtaLabel = 'Book a Strategy Call';
+export const pricingPolicyLabel = 'Custom quote only';
+export const contactRoutingEmail = 'mhunter@prodigyinteractive.com';
+
 export const services: ServiceItem[] = [
   {
     title: 'Web Design & Hosting',
@@ -138,7 +142,7 @@ export const engagementModels: EngagementModel[] = [
     timeline: '2-4 Weeks',
     bestFor: 'Teams needing speed and a clearly scoped deliverable.',
     deliverables: ['Scoping + architecture', 'Production implementation', 'Launch-ready handoff'],
-    ctaLabel: 'Plan a Sprint',
+    ctaLabel: primaryCtaLabel,
     ctaHref: '#contact'
   },
   {
@@ -148,7 +152,7 @@ export const engagementModels: EngagementModel[] = [
     timeline: '6-10 Weeks',
     bestFor: 'Businesses shipping a new product or rebuilding their digital foundation.',
     deliverables: ['Brand-aligned UI system', 'Web/mobile/game build', 'Analytics + SEO/AIEO setup'],
-    ctaLabel: 'Start a Launch',
+    ctaLabel: primaryCtaLabel,
     ctaHref: '#contact'
   },
   {
@@ -158,7 +162,7 @@ export const engagementModels: EngagementModel[] = [
     timeline: 'Monthly',
     bestFor: 'Teams that want a consistent product and growth execution partner.',
     deliverables: ['Prioritized backlog execution', 'Conversion + retention experiments', 'Performance tuning'],
-    ctaLabel: 'Discuss Retainer',
+    ctaLabel: primaryCtaLabel,
     ctaHref: '#contact'
   }
 ];
@@ -240,6 +244,11 @@ export const faqItems: FaqItem[] = [
       'Yes. Projects can include strategy, UX/UI, implementation, launch support, and iteration.'
   },
   {
+    question: 'Do you publish fixed pricing on the site?',
+    answer:
+      'No. Engagements are custom quote only, based on your goals, scope, and delivery timeline.'
+  },
+  {
     question: 'Is MattGPT live yet?',
     answer:
       'Not yet. The current site includes a stubbed MattGPT interface that will connect to ChatGPT later.'
@@ -253,4 +262,4 @@ export const heroStats = [
 ] as const;
 
 export const mattGptIntro =
-  'MattGPT is currently in stub mode. ChatGPT integration coming soon.';
+  'MattGPT will support both services-and-portfolio guidance and project scoping Q&A. ChatGPT integration is coming soon.';

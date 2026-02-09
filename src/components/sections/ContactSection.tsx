@@ -1,5 +1,6 @@
 import { Alert, Box, Button, Container, Stack, TextField, Typography } from '@mui/material';
 import { type FormEvent, useState } from 'react';
+import { contactRoutingEmail, pricingPolicyLabel, primaryCtaLabel } from '../../content/siteContent';
 import { contactStubSubmit } from '../../lib/contactStub';
 import { triggerHaptic } from '../../lib/haptics';
 
@@ -41,7 +42,8 @@ export function ContactSection() {
             Start your next product with Prodigy Interactive.
           </Typography>
           <Typography sx={{ color: 'var(--pi-muted)', mb: 3 }}>
-            Submit this stub form for now. Final email/CRM routing will be connected in the next step.
+            {pricingPolicyLabel}. Current contact routing target: {contactRoutingEmail}. This form is still in stub mode
+            until CRM wiring is complete.
           </Typography>
 
           <Box component="form" onSubmit={onSubmit}>
@@ -78,7 +80,7 @@ export function ContactSection() {
                 onPointerDown={() => triggerHaptic('medium')}
                 sx={{ alignSelf: 'flex-start', textTransform: 'none' }}
               >
-                Send Inquiry
+                {primaryCtaLabel}
               </Button>
             </Stack>
           </Box>

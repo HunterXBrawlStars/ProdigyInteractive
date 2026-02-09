@@ -1,6 +1,6 @@
 import { Box, Button, Container, Stack, Typography } from '@mui/material';
 import { motion } from 'framer-motion';
-import { engagementModels } from '../../content/siteContent';
+import { engagementModels, pricingPolicyLabel } from '../../content/siteContent';
 import { triggerHaptic } from '../../lib/haptics';
 
 export function EngagementSection() {
@@ -13,6 +13,9 @@ export function EngagementSection() {
         </Typography>
         <Typography sx={{ color: 'var(--pi-muted)', mb: 4, maxWidth: '66ch' }}>
           Choose the collaboration model that best fits your scope, timeline, and growth goals.
+        </Typography>
+        <Typography sx={{ color: 'var(--pi-cyan)', mb: 3, fontWeight: 700 }}>
+          Pricing: {pricingPolicyLabel}.
         </Typography>
 
         <Box

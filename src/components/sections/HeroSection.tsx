@@ -1,6 +1,6 @@
 import { Box, Button, Chip, Container, Stack, Typography } from '@mui/material';
 import { motion } from 'framer-motion';
-import { heroStats } from '../../content/siteContent';
+import { heroStats, primaryCtaLabel } from '../../content/siteContent';
 import { triggerHaptic } from '../../lib/haptics';
 
 export function HeroSection() {
@@ -53,7 +53,7 @@ export function HeroSection() {
                   textTransform: 'none'
                 }}
               >
-                Book a Strategy Call
+                {primaryCtaLabel}
               </Button>
               <Button
                 variant="outlined"

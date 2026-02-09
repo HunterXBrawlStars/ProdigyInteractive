@@ -1,3 +1,5 @@
+import { contactRoutingEmail, pricingPolicyLabel } from '../content/siteContent';
+
 export interface ContactPayload {
   name: string;
   email: string;
@@ -7,5 +9,5 @@ export interface ContactPayload {
 
 export function contactStubSubmit(payload: ContactPayload): string {
   void payload;
-  return 'Contact workflow is not connected yet. We will wire this to your CRM/email backend next.';
+  return `Contact workflow is not connected yet. ${pricingPolicyLabel}. For now, reach us directly at ${contactRoutingEmail}.`;
 }

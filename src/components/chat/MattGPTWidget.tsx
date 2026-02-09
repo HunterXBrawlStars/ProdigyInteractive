@@ -69,10 +69,14 @@ export function MattGPTWidget() {
               <Typography>{stubReply}</Typography>
             </Box>
 
-            <TextField label="Ask MattGPT" placeholder="What can you build for my business?" disabled />
+            <TextField
+              label="Ask MattGPT"
+              placeholder="Ask about services, portfolio examples, or project scoping."
+              disabled
+            />
 
             <Typography sx={{ fontSize: '.88rem', color: 'var(--pi-muted)' }}>
-              ChatGPT integration coming soon.
+              ChatGPT integration coming soon for live responses.
             </Typography>
           </Stack>
         </Box>
