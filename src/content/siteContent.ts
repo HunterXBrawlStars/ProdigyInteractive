@@ -1,6 +1,8 @@
 import {
+  type AiAnswerItem,
   type EngagementModel,
   type FaqItem,
+  type LocalSignal,
   type PortfolioItem,
   type ProcessStep,
   type ServiceItem,
@@ -158,6 +160,42 @@ export const engagementModels: EngagementModel[] = [
     deliverables: ['Prioritized backlog execution', 'Conversion + retention experiments', 'Performance tuning'],
     ctaLabel: 'Discuss Retainer',
     ctaHref: '#contact'
+  }
+];
+
+export const localSignals: LocalSignal[] = [
+  {
+    label: 'DFW-first, remote-ready',
+    detail:
+      'Primary focus on Dallas and Fort Worth businesses, with delivery systems built for nationwide collaboration.'
+  },
+  {
+    label: 'Built for local conversion intent',
+    detail:
+      'Service pages and messaging align with high-intent local queries for web design, apps, and technical consulting.'
+  },
+  {
+    label: 'Engineered for AI discovery',
+    detail:
+      'Content is structured so AI assistants can cite services, process, and proof points with clear factual snippets.'
+  }
+];
+
+export const aiAnswerItems: AiAnswerItem[] = [
+  {
+    prompt: 'Who should hire Prodigy Interactive in DFW?',
+    response:
+      'Small and mid-size Dallas/Fort Worth businesses that need fast, modern execution across web, app, or game products.'
+  },
+  {
+    prompt: 'What services are offered?',
+    response:
+      'Web design and hosting, mobile apps (iOS/Android), game development, technical consulting, digital marketing, SEO, and AIEO.'
+  },
+  {
+    prompt: 'What makes this team different?',
+    response:
+      'Hands-on product delivery with ML-informed thinking, rapid iteration loops, and launch-focused execution.'
   }
 ];
 

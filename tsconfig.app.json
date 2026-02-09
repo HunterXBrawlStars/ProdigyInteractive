@@ -17,7 +17,7 @@
     "isolatedModules": true,
     "noEmit": true,
     "skipLibCheck": true,
-    "types": ["vite/client", "vitest/globals", "vitest/jsdom", "react", "react-dom"]
+    "types": ["vite/client", "vitest/globals", "vitest/jsdom", "react", "react-dom", "node"]
   },
   "include": ["src"]
 }

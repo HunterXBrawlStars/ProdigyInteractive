@@ -1,19 +1,58 @@
-import { Box } from '@mui/material';
-import { MattGPTWidget } from './components/chat/MattGPTWidget';
+import { Box, Skeleton, Stack } from '@mui/material';
+import { lazy, Suspense } from 'react';
 import { AmbientBackground } from './components/effects/AmbientBackground';
-import { MobileQuickDock } from './components/layout/MobileQuickDock';
 import { ScrollProgressIndicator } from './components/layout/ScrollProgressIndicator';
-import { SiteFooter } from './components/layout/SiteFooter';
 import { SiteHeader } from './components/layout/SiteHeader';
-import { ContactSection } from './components/sections/ContactSection';
-import { EngagementSection } from './components/sections/EngagementSection';
-import { FaqSection } from './components/sections/FaqSection';
 import { HeroSection } from './components/sections/HeroSection';
-import { PortfolioSection } from './components/sections/PortfolioSection';
-import { ProcessSection } from './components/sections/ProcessSection';
+import { LocalPresenceSection } from './components/sections/LocalPresenceSection';
 import { ServicesSection } from './components/sections/ServicesSection';
-import { TeamSection } from './components/sections/TeamSection';
-import { TestimonialsSection } from './components/sections/TestimonialsSection';
+
+const EngagementSection = lazy(() =>
+  import('./components/sections/EngagementSection').then((module) => ({ default: module.EngagementSection }))
+);
+const PortfolioSection = lazy(() =>
+  import('./components/sections/PortfolioSection').then((module) => ({ default: module.PortfolioSection }))
+);
+const ProcessSection = lazy(() =>
+  import('./components/sections/ProcessSection').then((module) => ({ default: module.ProcessSection }))
+);
+const TestimonialsSection = lazy(() =>
+  import('./components/sections/TestimonialsSection').then((module) => ({ default: module.TestimonialsSection }))
+);
+const TeamSection = lazy(() =>
+  import('./components/sections/TeamSection').then((module) => ({ default: module.TeamSection }))
+);
+const FaqSection = lazy(() =>
+  import('./components/sections/FaqSection').then((module) => ({ default: module.FaqSection }))
+);
+const ContactSection = lazy(() =>
+  import('./components/sections/ContactSection').then((module) => ({ default: module.ContactSection }))
+);
+const SiteFooter = lazy(() =>
+  import('./components/layout/SiteFooter').then((module) => ({ default: module.SiteFooter }))
+);
+const MobileQuickDock = lazy(() =>
+  import('./components/layout/MobileQuickDock').then((module) => ({ default: module.MobileQuickDock }))
+);
+const MattGPTWidget = lazy(() =>
+  import('./components/chat/MattGPTWidget').then((module) => ({ default: module.MattGPTWidget }))
+);
+
+function DeferredSectionFallback() {
+  return (
+    <Stack spacing={2} sx={{ px: { xs: 2, sm: 3 }, py: 4 }}>
+      <Box className="glass-panel" sx={{ p: 2.2 }}>
+        <Skeleton variant="text" width="48%" height={40} />
+        <Skeleton variant="text" width="88%" />
+        <Skeleton variant="text" width="82%" />
+      </Box>
+      <Box className="glass-panel" sx={{ p: 2.2 }}>
+        <Skeleton variant="text" width="42%" height={34} />
+        <Skeleton variant="rounded" width="100%" height={120} />
+      </Box>
+    </Stack>
+  );
+}
 
 function App() {
   return (
@@ -23,16 +62,23 @@ function App() {
       <SiteHeader />
       <HeroSection />
       <ServicesSection />
-      <EngagementSection />
-      <PortfolioSection />
-      <ProcessSection />
-      <TestimonialsSection />
-      <TeamSection />
-      <FaqSection />
-      <ContactSection />
-      <SiteFooter />
-      <MobileQuickDock />
-      <MattGPTWidget />
+      <LocalPresenceSection />
+
+      <Suspense fallback={<DeferredSectionFallback />}>
+        <EngagementSection />
+        <PortfolioSection />
+        <ProcessSection />
+        <TestimonialsSection />
+        <TeamSection />
+        <FaqSection />
+        <ContactSection />
+        <SiteFooter />
+      </Suspense>
+
+      <Suspense fallback={null}>
+        <MobileQuickDock />
+        <MattGPTWidget />
+      </Suspense>
     </Box>
   );
 }

@@ -29,6 +29,16 @@ export interface EngagementModel {
   ctaHref: string;
 }
 
+export interface LocalSignal {
+  label: string;
+  detail: string;
+}
+
+export interface AiAnswerItem {
+  prompt: string;
+  response: string;
+}
+
 export interface TeamMemberStub {
   displayName: string;
   role: string;
