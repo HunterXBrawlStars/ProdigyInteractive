@@ -1,0 +1,9 @@
+{
+  "name": "Prodigy Interactive",
+  "short_name": "Prodigy",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#060713",
+  "theme_color": "#1ce0ff",
+  "icons": []
+}

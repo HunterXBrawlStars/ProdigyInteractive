@@ -1,0 +1,12 @@
+:root {
+  --pi-bg-900: #060713;
+  --pi-bg-800: #0d1120;
+  --pi-surface: rgba(15, 20, 42, 0.75);
+  --pi-cyan: #1ce0ff;
+  --pi-blue: #3e7dff;
+  --pi-violet: #8f5bff;
+  --pi-text: #ebf1ff;
+  --pi-muted: #9eb2d8;
+  --pi-border: rgba(79, 136, 255, 0.35);
+  --pi-glow: 0 0 45px rgba(28, 224, 255, 0.3);
+}
