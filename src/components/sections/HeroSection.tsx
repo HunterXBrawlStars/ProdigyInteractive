@@ -15,30 +15,40 @@ export function HeroSection() {
             transition={{ duration: 0.5 }}
             sx={{
               flex: 1,
-              minHeight: { xs: 280, md: 420 },
-              borderRadius: { xs: 4, md: 5 },
               position: 'relative',
-              overflow: 'hidden',
-              background:
-                'radial-gradient(circle at 58% 44%, rgba(21, 215, 255, 0.15), rgba(21, 215, 255, 0) 48%), radial-gradient(circle at 35% 35%, rgba(141, 93, 255, 0.16), rgba(141, 93, 255, 0) 52%)'
+              display: 'grid',
+              justifyItems: 'center'
             }}
           >
             <Box
-              data-testid="hero-logo-blend"
+              aria-hidden="true"
               sx={{
                 position: 'absolute',
-                inset: 0,
-                backgroundImage: 'url(/assets/ProdigyInteractiveLogo.png)',
-                backgroundRepeat: 'no-repeat',
-                backgroundPosition: 'center',
-                backgroundSize: { xs: '110% auto', sm: '90% auto', lg: '78% auto' },
-                opacity: 0.88,
-                filter: 'saturate(1.16) drop-shadow(0 0 55px rgba(18, 208, 255, 0.36))',
-                mixBlendMode: 'screen',
+                inset: { xs: '16% 0 10% 0', md: '10% -8% 8% -8%' },
+                borderRadius: '50%',
+                background:
+                  'radial-gradient(circle at 50% 48%, rgba(24, 224, 255, 0.26), rgba(24, 224, 255, 0) 60%), radial-gradient(circle at 34% 34%, rgba(141, 93, 255, 0.24), rgba(141, 93, 255, 0) 64%)',
+                filter: 'blur(36px)',
+                pointerEvents: 'none'
+              }}
+            />
+
+            <Box
+              data-testid="hero-logo-blend"
+              component="img"
+              src="/assets/ProdigyInteractiveLogo.png"
+              alt="Prodigy Interactive logo"
+              sx={{
+                position: 'relative',
+                zIndex: 1,
+                width: { xs: 'min(92vw, 620px)', sm: 'min(86vw, 680px)', lg: 'min(52vw, 740px)' },
+                height: 'auto',
+                opacity: 1,
+                filter: 'saturate(1.12) contrast(1.03)',
                 maskImage:
-                  'radial-gradient(ellipse at 50% 54%, rgba(0,0,0,0.96) 0%, rgba(0,0,0,0.88) 32%, rgba(0,0,0,0.48) 62%, rgba(0,0,0,0.08) 84%, rgba(0,0,0,0) 100%)',
+                  'radial-gradient(ellipse 76% 68% at 50% 52%, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 48%, rgba(0,0,0,0.96) 60%, rgba(0,0,0,0.82) 72%, rgba(0,0,0,0.56) 84%, rgba(0,0,0,0.28) 93%, rgba(0,0,0,0.1) 97%, rgba(0,0,0,0) 100%)',
                 WebkitMaskImage:
-                  'radial-gradient(ellipse at 50% 54%, rgba(0,0,0,0.96) 0%, rgba(0,0,0,0.88) 32%, rgba(0,0,0,0.48) 62%, rgba(0,0,0,0.08) 84%, rgba(0,0,0,0) 100%)'
+                  'radial-gradient(ellipse 76% 68% at 50% 52%, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 48%, rgba(0,0,0,0.96) 60%, rgba(0,0,0,0.82) 72%, rgba(0,0,0,0.56) 84%, rgba(0,0,0,0.28) 93%, rgba(0,0,0,0.1) 97%, rgba(0,0,0,0) 100%)'
               }}
             />
 
@@ -48,10 +58,10 @@ export function HeroSection() {
               flexWrap="wrap"
               useFlexGap
               sx={{
-                position: 'absolute',
-                left: { xs: 16, md: 22 },
-                right: { xs: 16, md: 22 },
-                bottom: { xs: 14, md: 18 }
+                position: 'relative',
+                zIndex: 2,
+                justifyContent: 'center',
+                mt: { xs: -1.5, md: -2 }
               }}
             >
               {heroFocuses.map((focus) => (
