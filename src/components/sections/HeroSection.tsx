@@ -4,6 +4,14 @@ import { heroFocuses, primaryCtaLabel } from '../../content/siteContent';
 import { triggerHaptic } from '../../lib/haptics';
 
 export function HeroSection() {
+  const horizontalEdgeFade =
+    'linear-gradient(to right, rgba(0,0,0,0) 0%, rgba(0,0,0,0.24) 6%, rgba(0,0,0,0.68) 11%, rgba(0,0,0,0.92) 14%, rgba(0,0,0,1) 18%, rgba(0,0,0,1) 82%, rgba(0,0,0,0.92) 86%, rgba(0,0,0,0.68) 89%, rgba(0,0,0,0.24) 94%, rgba(0,0,0,0) 100%)';
+  const verticalEdgeFade =
+    'linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.24) 6%, rgba(0,0,0,0.68) 11%, rgba(0,0,0,0.92) 14%, rgba(0,0,0,1) 18%, rgba(0,0,0,1) 82%, rgba(0,0,0,0.92) 86%, rgba(0,0,0,0.68) 89%, rgba(0,0,0,0.24) 94%, rgba(0,0,0,0) 100%)';
+  const cornerSoftening =
+    'radial-gradient(ellipse 102% 94% at 50% 52%, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 74%, rgba(0,0,0,0.92) 84%, rgba(0,0,0,0.72) 90%, rgba(0,0,0,0.44) 95%, rgba(0,0,0,0.14) 98.5%, rgba(0,0,0,0) 100%)';
+  const blendedEdgeMask = `${horizontalEdgeFade}, ${verticalEdgeFade}, ${cornerSoftening}`;
+
   return (
     <Box component="section" id="home" sx={{ pt: { xs: 14, md: 17 }, pb: { xs: 8, md: 10 } }}>
       <Container maxWidth="xl">
@@ -45,10 +53,10 @@ export function HeroSection() {
                 height: 'auto',
                 opacity: 1,
                 filter: 'saturate(1.12) contrast(1.03)',
-                maskImage:
-                  'radial-gradient(ellipse 96% 90% at 50% 52%, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 70%, rgba(0,0,0,0.96) 79%, rgba(0,0,0,0.84) 86%, rgba(0,0,0,0.58) 92%, rgba(0,0,0,0.30) 96%, rgba(0,0,0,0.1) 98.8%, rgba(0,0,0,0) 100%)',
-                WebkitMaskImage:
-                  'radial-gradient(ellipse 96% 90% at 50% 52%, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 70%, rgba(0,0,0,0.96) 79%, rgba(0,0,0,0.84) 86%, rgba(0,0,0,0.58) 92%, rgba(0,0,0,0.30) 96%, rgba(0,0,0,0.1) 98.8%, rgba(0,0,0,0) 100%)',
+                maskImage: blendedEdgeMask,
+                WebkitMaskImage: blendedEdgeMask,
+                maskComposite: 'intersect',
+                WebkitMaskComposite: 'source-in, source-in',
                 maskRepeat: 'no-repeat',
                 maskSize: '100% 100%',
                 maskPosition: 'center',
