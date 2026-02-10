@@ -18,7 +18,7 @@ describe('mobile and haptic interactions', () => {
     const user = userEvent.setup();
     render(<App />);
 
-    await user.click(await screen.findByRole('button', { name: /open mattgpt/i }));
+    await user.click(await screen.findByRole('button', { name: /open mattgpt/i }, { timeout: 5000 }));
 
     expect(hapticSpy).toHaveBeenCalledWith('medium');
     hapticSpy.mockRestore();

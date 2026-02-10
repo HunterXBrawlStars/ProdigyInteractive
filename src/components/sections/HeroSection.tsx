@@ -9,7 +9,7 @@ export function HeroSection() {
   const verticalEdgeFade =
     'linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.24) 6%, rgba(0,0,0,0.68) 11%, rgba(0,0,0,0.92) 14%, rgba(0,0,0,1) 18%, rgba(0,0,0,1) 82%, rgba(0,0,0,0.92) 86%, rgba(0,0,0,0.68) 89%, rgba(0,0,0,0.24) 94%, rgba(0,0,0,0) 100%)';
   const cornerSoftening =
-    'radial-gradient(ellipse 102% 94% at 50% 52%, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 74%, rgba(0,0,0,0.92) 84%, rgba(0,0,0,0.72) 90%, rgba(0,0,0,0.44) 95%, rgba(0,0,0,0.14) 98.5%, rgba(0,0,0,0) 100%)';
+    'radial-gradient(ellipse 64% 56% at 50% 52%, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 72%, rgba(0,0,0,0.9) 82%, rgba(0,0,0,0.66) 89%, rgba(0,0,0,0.36) 95%, rgba(0,0,0,0.1) 98.5%, rgba(0,0,0,0) 100%)';
   const blendedEdgeMask = `${horizontalEdgeFade}, ${verticalEdgeFade}, ${cornerSoftening}`;
 
   return (
@@ -100,28 +100,20 @@ export function HeroSection() {
             transition={{ duration: 0.55 }}
             sx={{ flex: 1 }}
           >
-            <Chip
-              label="Dallas / Fort Worth + Remote"
-              sx={{
-                mb: 2,
-                border: '1px solid var(--pi-border)',
-                backgroundColor: 'rgba(37, 56, 112, 0.35)'
-              }}
-            />
             <Typography
               variant="h1"
               sx={{
-                fontSize: { xs: '2.1rem', md: '3.6rem' },
+                fontSize: { xs: '2rem', md: '3.2rem' },
                 lineHeight: 1.03,
                 mb: 2,
-                maxWidth: '16ch'
+                maxWidth: { xs: '16ch', md: '21ch' }
               }}
             >
               Ultra-modern products for ambitious businesses.
             </Typography>
             <Typography sx={{ color: 'var(--pi-muted)', maxWidth: '60ch', mb: 3, fontSize: '1.05rem' }}>
-              Prodigy Interactive designs and ships high-impact websites, mobile apps, and games with the speed
-              of an elite product team.
+              Launch websites, apps, games, and practical AI systems that win more customers, remove manual
+              bottlenecks, and reduce operating costs.
             </Typography>
             <Stack direction={{ xs: 'column', sm: 'row' }} spacing={1.5}>
               <Button

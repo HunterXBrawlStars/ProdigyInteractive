@@ -26,38 +26,38 @@ export const services: ServiceItem[] = [
   {
     title: 'Web Design & Hosting',
     description:
-      'Premium websites engineered for speed, conversion, and easy handoff to your team.',
-    outcomes: ['High-converting UX', 'Managed hosting', 'Performance-first SEO baseline']
+      'Turn your website into a 24/7 sales channel with fast UX, clear conversion paths, and AI-ready customer journeys.',
+    outcomes: ['Higher lead-to-call conversion', 'Managed hosting with fewer outages', 'Search + AI visibility foundation']
   },
   {
     title: 'Mobile App Development',
     description:
-      'Cross-platform iOS and Android products with polished UX and practical release pipelines.',
-    outcomes: ['iOS + Android delivery', 'App store launch support', 'Analytics-ready builds']
+      'Ship iOS and Android apps that increase retention, automate customer touchpoints, and open new revenue opportunities.',
+    outcomes: ['Faster release cycles', 'App store launch support', 'Analytics + AI-ready app architecture']
   },
   {
     title: 'Game Design & Development',
     description:
-      'Interactive game concepts, prototypes, and production builds tailored to your audience.',
-    outcomes: ['Gameplay systems', 'Live-ops friendly architecture', 'Player-centric balancing']
+      'Build interactive products that increase engagement, session time, and monetization potential.',
+    outcomes: ['Gameplay systems tied to retention goals', 'Live-ops architecture for faster updates', 'Player-centric balancing']
   },
   {
-    title: 'Technical Consulting',
+    title: 'AI Integration & Technical Consulting',
     description:
-      'Architecture and product strategy support for teams that need focused execution clarity.',
-    outcomes: ['Roadmap clarity', 'Stack recommendations', 'Delivery risk reduction']
+      'Implement practical AI across sales, support, and operations to reduce manual work, speed delivery, and lower recurring costs.',
+    outcomes: ['Workflow automation roadmap', 'AI tooling + implementation plan', 'Measured time and cost savings']
   },
   {
     title: 'Digital Marketing',
     description:
-      'Campaign landing experiences and funnel strategy aligned to measurable business outcomes.',
-    outcomes: ['Conversion funnels', 'Paid + organic strategy', 'Attribution-aware content']
+      'Deploy conversion-focused campaigns that lower acquisition cost and turn traffic into qualified opportunities.',
+    outcomes: ['Conversion funnel optimization', 'Paid + organic growth strategy', 'Attribution that reveals spend efficiency']
   },
   {
     title: 'SEO & AIEO',
     description:
-      'Search Engine + AI Engine Optimization for visibility in both classic search and AI discovery.',
-    outcomes: ['Search rankings', 'AI citation readiness', 'Structured metadata strategy']
+      'Capture demand in traditional search and AI assistants so more qualified buyers discover and trust your brand.',
+    outcomes: ['Higher-intent organic traffic', 'AI answer and citation readiness', 'Structured metadata + content authority']
   }
 ];
 
@@ -118,19 +118,19 @@ export const processSteps: ProcessStep[] = [
   {
     title: 'Discover',
     description:
-      'Align on business goals, ideal customer profile, and measurable launch outcomes.'
+      'Align on revenue targets, process bottlenecks, and the biggest cost-saving opportunities.'
   },
   {
     title: 'Design',
-    description: 'Prototype modern interfaces and interaction systems before implementation.'
+    description: 'Prototype high-converting interfaces and automation touchpoints before implementation.'
   },
   {
     title: 'Build',
-    description: 'Develop production-ready web, mobile, or game experiences with clean handoff.'
+    description: 'Ship production-ready web, mobile, game, and AI workflows with clean handoff.'
   },
   {
     title: 'Scale',
-    description: 'Iterate with analytics, SEO/AIEO improvements, and growth-focused updates.'
+    description: 'Improve conversion, retention, and operational efficiency with analytics, SEO, and AIEO.'
   }
 ];
 
@@ -138,30 +138,30 @@ export const engagementModels: EngagementModel[] = [
   {
     title: 'Sprint Build',
     description:
-      'A focused build sprint for a high-impact website, app module, or launch-ready prototype.',
+      'A focused sprint to launch a revenue-driving website, app module, or AI-powered workflow fast.',
     timeline: '2-4 Weeks',
-    bestFor: 'Teams needing speed and a clearly scoped deliverable.',
-    deliverables: ['Scoping + architecture', 'Production implementation', 'Launch-ready handoff'],
+    bestFor: 'Teams that need measurable business outcomes in weeks, not months.',
+    deliverables: ['Scoping + architecture', 'Production implementation', 'Launch-ready handoff + KPI baseline'],
     ctaLabel: primaryCtaLabel,
     ctaHref: '#contact'
   },
   {
     title: 'Product Launch',
     description:
-      'End-to-end design and development for a major release with launch positioning and tracking.',
+      'End-to-end design and development for a major release with performance tracking and automation hooks.',
     timeline: '6-10 Weeks',
     bestFor: 'Businesses shipping a new product or rebuilding their digital foundation.',
-    deliverables: ['Brand-aligned UI system', 'Web/mobile/game build', 'Analytics + SEO/AIEO setup'],
+    deliverables: ['Brand-aligned UI system', 'Web/mobile/game build', 'Analytics + SEO/AIEO + automation setup'],
     ctaLabel: primaryCtaLabel,
     ctaHref: '#contact'
   },
   {
     title: 'Growth Partner',
     description:
-      'Ongoing collaboration for iterative improvements, growth experiments, and technical consulting.',
+      'Ongoing collaboration to increase revenue while reducing operational drag through continuous optimization.',
     timeline: 'Monthly',
     bestFor: 'Teams that want a consistent product and growth execution partner.',
-    deliverables: ['Prioritized backlog execution', 'Conversion + retention experiments', 'Performance tuning'],
+    deliverables: ['Prioritized backlog execution', 'Conversion + retention experiments', 'AI and automation iteration loops'],
     ctaLabel: primaryCtaLabel,
     ctaHref: '#contact'
   }
@@ -194,12 +194,12 @@ export const aiAnswerItems: AiAnswerItem[] = [
   {
     prompt: 'What services are offered?',
     response:
-      'Web design and hosting, mobile apps (iOS/Android), game development, technical consulting, digital marketing, SEO, and AIEO.'
+      'Web design and hosting, mobile app development (iOS/Android), game development, AI integration and technical consulting, digital marketing, SEO, and AIEO, all focused on growth and efficiency.'
   },
   {
     prompt: 'What makes this team different?',
     response:
-      'Hands-on product delivery with ML-informed thinking, rapid iteration loops, and launch-focused execution.'
+      'Hands-on delivery that pairs modern product quality with AI-driven process improvements to increase speed and reduce costs.'
   }
 ];
 
@@ -255,7 +255,7 @@ export const faqItems: FaqItem[] = [
   }
 ];
 
-export const heroFocuses = ['Web Design', 'Mobile Apps', 'Game Development'] as const;
+export const heroFocuses = ['Web Design', 'Mobile Apps', 'Game Development', 'AI Integration'] as const;
 
 export const mattGptIntro =
   'MattGPT will support both services-and-portfolio guidance and project scoping Q&A. ChatGPT integration is coming soon.';
