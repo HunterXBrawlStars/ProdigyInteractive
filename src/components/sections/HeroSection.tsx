@@ -36,7 +36,7 @@ export function HeroSection() {
             <Box
               data-testid="hero-logo-blend"
               component="img"
-              src="/assets/ProdigyInteractiveLogoAlpha.png"
+              src="/assets/ProdigyInteractiveLogo.png"
               alt="Prodigy Interactive logo"
               sx={{
                 position: 'relative',
@@ -46,9 +46,15 @@ export function HeroSection() {
                 opacity: 1,
                 filter: 'saturate(1.12) contrast(1.03)',
                 maskImage:
-                  'radial-gradient(ellipse 68% 62% at 50% 52%, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 94%, rgba(0,0,0,0.9) 97%, rgba(0,0,0,0.55) 99%, rgba(0,0,0,0) 100%)',
+                  'radial-gradient(ellipse 96% 90% at 50% 52%, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 70%, rgba(0,0,0,0.96) 79%, rgba(0,0,0,0.84) 86%, rgba(0,0,0,0.58) 92%, rgba(0,0,0,0.30) 96%, rgba(0,0,0,0.1) 98.8%, rgba(0,0,0,0) 100%)',
                 WebkitMaskImage:
-                  'radial-gradient(ellipse 68% 62% at 50% 52%, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 94%, rgba(0,0,0,0.9) 97%, rgba(0,0,0,0.55) 99%, rgba(0,0,0,0) 100%)'
+                  'radial-gradient(ellipse 96% 90% at 50% 52%, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 70%, rgba(0,0,0,0.96) 79%, rgba(0,0,0,0.84) 86%, rgba(0,0,0,0.58) 92%, rgba(0,0,0,0.30) 96%, rgba(0,0,0,0.1) 98.8%, rgba(0,0,0,0) 100%)',
+                maskRepeat: 'no-repeat',
+                maskSize: '100% 100%',
+                maskPosition: 'center',
+                WebkitMaskRepeat: 'no-repeat',
+                WebkitMaskSize: '100% 100%',
+                WebkitMaskPosition: 'center'
               }}
             />
 
