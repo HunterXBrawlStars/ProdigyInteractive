@@ -36,7 +36,7 @@ export function HeroSection() {
             <Box
               data-testid="hero-logo-blend"
               component="img"
-              src="/assets/ProdigyInteractiveLogo.png"
+              src="/assets/ProdigyInteractiveLogoAlpha.png"
               alt="Prodigy Interactive logo"
               sx={{
                 position: 'relative',
@@ -46,9 +46,9 @@ export function HeroSection() {
                 opacity: 1,
                 filter: 'saturate(1.12) contrast(1.03)',
                 maskImage:
-                  'radial-gradient(ellipse 76% 68% at 50% 52%, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 48%, rgba(0,0,0,0.96) 60%, rgba(0,0,0,0.82) 72%, rgba(0,0,0,0.56) 84%, rgba(0,0,0,0.28) 93%, rgba(0,0,0,0.1) 97%, rgba(0,0,0,0) 100%)',
+                  'radial-gradient(ellipse 68% 62% at 50% 52%, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 94%, rgba(0,0,0,0.9) 97%, rgba(0,0,0,0.55) 99%, rgba(0,0,0,0) 100%)',
                 WebkitMaskImage:
-                  'radial-gradient(ellipse 76% 68% at 50% 52%, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 48%, rgba(0,0,0,0.96) 60%, rgba(0,0,0,0.82) 72%, rgba(0,0,0,0.56) 84%, rgba(0,0,0,0.28) 93%, rgba(0,0,0,0.1) 97%, rgba(0,0,0,0) 100%)'
+                  'radial-gradient(ellipse 68% 62% at 50% 52%, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 94%, rgba(0,0,0,0.9) 97%, rgba(0,0,0,0.55) 99%, rgba(0,0,0,0) 100%)'
               }}
             />
 
@@ -61,7 +61,7 @@ export function HeroSection() {
                 position: 'relative',
                 zIndex: 2,
                 justifyContent: 'center',
-                mt: { xs: -1.5, md: -2 }
+                mt: { xs: -7, md: -9 }
               }}
             >
               {heroFocuses.map((focus) => (
@@ -97,7 +97,7 @@ export function HeroSection() {
             <Typography
               variant="h1"
               sx={{
-                fontSize: { xs: '2.2rem', md: '3.8rem' },
+                fontSize: { xs: '2.1rem', md: '3.6rem' },
                 lineHeight: 1.03,
                 mb: 2,
                 maxWidth: '16ch'
