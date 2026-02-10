@@ -255,11 +255,7 @@ export const faqItems: FaqItem[] = [
   }
 ];
 
-export const heroStats = [
-  { label: 'Flagship Product', value: 'PLProdigy' },
-  { label: 'Core Focus', value: 'Web • Mobile • Games' },
-  { label: 'Service Area', value: 'Dallas/Fort Worth + Remote' }
-] as const;
+export const heroFocuses = ['Web Design', 'Mobile Apps', 'Game Development'] as const;
 
 export const mattGptIntro =
   'MattGPT will support both services-and-portfolio guidance and project scoping Q&A. ChatGPT integration is coming soon.';

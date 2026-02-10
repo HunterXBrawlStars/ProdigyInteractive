@@ -1,6 +1,6 @@
 import { Box, Button, Chip, Container, Stack, Typography } from '@mui/material';
 import { motion } from 'framer-motion';
-import { heroStats, primaryCtaLabel } from '../../content/siteContent';
+import { heroFocuses, primaryCtaLabel } from '../../content/siteContent';
 import { triggerHaptic } from '../../lib/haptics';
 
 export function HeroSection() {
@@ -8,6 +8,67 @@ export function HeroSection() {
     <Box component="section" id="home" sx={{ pt: { xs: 14, md: 17 }, pb: { xs: 8, md: 10 } }}>
       <Container maxWidth="xl">
         <Stack direction={{ xs: 'column', lg: 'row' }} spacing={6} alignItems={{ lg: 'center' }}>
+          <Box
+            component={motion.div}
+            initial={{ opacity: 0, scale: 0.96 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.5 }}
+            sx={{
+              flex: 1,
+              minHeight: { xs: 280, md: 420 },
+              borderRadius: { xs: 4, md: 5 },
+              position: 'relative',
+              overflow: 'hidden',
+              background:
+                'radial-gradient(circle at 58% 44%, rgba(21, 215, 255, 0.15), rgba(21, 215, 255, 0) 48%), radial-gradient(circle at 35% 35%, rgba(141, 93, 255, 0.16), rgba(141, 93, 255, 0) 52%)'
+            }}
+          >
+            <Box
+              data-testid="hero-logo-blend"
+              sx={{
+                position: 'absolute',
+                inset: 0,
+                backgroundImage: 'url(/assets/ProdigyInteractiveLogo.png)',
+                backgroundRepeat: 'no-repeat',
+                backgroundPosition: 'center',
+                backgroundSize: { xs: '110% auto', sm: '90% auto', lg: '78% auto' },
+                opacity: 0.88,
+                filter: 'saturate(1.16) drop-shadow(0 0 55px rgba(18, 208, 255, 0.36))',
+                mixBlendMode: 'screen',
+                maskImage:
+                  'radial-gradient(ellipse at 50% 54%, rgba(0,0,0,0.96) 0%, rgba(0,0,0,0.88) 32%, rgba(0,0,0,0.48) 62%, rgba(0,0,0,0.08) 84%, rgba(0,0,0,0) 100%)',
+                WebkitMaskImage:
+                  'radial-gradient(ellipse at 50% 54%, rgba(0,0,0,0.96) 0%, rgba(0,0,0,0.88) 32%, rgba(0,0,0,0.48) 62%, rgba(0,0,0,0.08) 84%, rgba(0,0,0,0) 100%)'
+              }}
+            />
+
+            <Stack
+              direction="row"
+              spacing={1}
+              flexWrap="wrap"
+              useFlexGap
+              sx={{
+                position: 'absolute',
+                left: { xs: 16, md: 22 },
+                right: { xs: 16, md: 22 },
+                bottom: { xs: 14, md: 18 }
+              }}
+            >
+              {heroFocuses.map((focus) => (
+                <Chip
+                  key={focus}
+                  label={focus}
+                  size="small"
+                  sx={{
+                    border: '1px solid rgba(126, 180, 255, 0.42)',
+                    backgroundColor: 'rgba(7, 13, 31, 0.62)',
+                    backdropFilter: 'blur(8px)'
+                  }}
+                />
+              ))}
+            </Stack>
+          </Box>
+
           <Box
             component={motion.div}
             initial={{ opacity: 0, y: 18 }}
@@ -65,57 +126,6 @@ export function HeroSection() {
                 Explore Portfolio
               </Button>
             </Stack>
-          </Box>
-
-          <Box
-            component={motion.div}
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.5, delay: 0.15 }}
-            sx={{ flex: 1 }}
-          >
-            <Box className="glass-panel" sx={{ p: { xs: 3, md: 4 }, position: 'relative', overflow: 'hidden' }}>
-              <Box
-                sx={{
-                  position: 'absolute',
-                  width: 220,
-                  height: 220,
-                  right: -70,
-                  top: -90,
-                  borderRadius: '50%',
-                  background: 'radial-gradient(circle, rgba(28,224,255,0.32) 0%, rgba(28,224,255,0) 72%)'
-                }}
-              />
-              <Stack spacing={1.5}>
-                <Typography variant="overline" sx={{ color: 'var(--pi-cyan)', fontWeight: 700 }}>
-                  Prodigy Interactive
-                </Typography>
-                <img
-                  src="/assets/ProdigyInteractiveLogo.png"
-                  alt="Prodigy Interactive logo"
-                  style={{ width: '100%', maxWidth: 420, marginTop: 8 }}
-                />
-                <Stack spacing={1.2} sx={{ mt: 1 }}>
-                  {heroStats.map((stat) => (
-                    <Box
-                      key={stat.label}
-                      sx={{
-                        display: 'flex',
-                        justifyContent: 'space-between',
-                        gap: 2,
-                        borderBottom: '1px solid rgba(144, 177, 255, 0.24)',
-                        py: 1
-                      }}
-                    >
-                      <Typography color="var(--pi-muted)" sx={{ fontSize: '.9rem' }}>
-                        {stat.label}
-                      </Typography>
-                      <Typography sx={{ fontWeight: 700 }}>{stat.value}</Typography>
-                    </Box>
-                  ))}
-                </Stack>
-              </Stack>
-            </Box>
           </Box>
         </Stack>
       </Container>
