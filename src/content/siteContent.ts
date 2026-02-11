@@ -20,7 +20,7 @@ export const navLinks = [
 
 export const primaryCtaLabel = 'Book a Strategy Call';
 export const pricingPolicyLabel = 'Custom quote only';
-export const contactRoutingEmail = 'mhunter@prodigyinteractive.com';
+export const contactRoutingEmail = 'mhunter.locus@gmail.com';
 
 export const services: ServiceItem[] = [
   {
@@ -253,7 +253,7 @@ export const faqItems: FaqItem[] = [
   {
     question: 'Is MattGPT live yet?',
     answer:
-      'Yes. MattGPT is available to help visitors explore services, portfolio examples, and project scoping questions in real time.'
+      'Not yet. The current site includes a stubbed MattGPT interface that will connect to ChatGPT later.'
   }
 ];
 

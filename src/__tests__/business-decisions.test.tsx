@@ -10,19 +10,17 @@ describe('applied business decisions', () => {
     expect(ctaLinks.length).toBeGreaterThan(0);
   });
 
-  it('shows custom-quote messaging and routes contact stub to business email', async () => {
-    const user = userEvent.setup();
+  it('shows custom-quote messaging and routes launch-phase contact to business email', async () => {
     render(<App />);
 
     const pricingMentions = await screen.findAllByText(/custom quote only/i);
     expect(pricingMentions.length).toBeGreaterThan(0);
 
-    await user.type(await screen.findByLabelText(/name/i), 'Taylor');
-    await user.type(await screen.findByLabelText(/email/i), 'taylor@example.com');
-    await user.click(await screen.findByRole('button', { name: /book a strategy call/i }));
-
-    const alert = await screen.findByRole('alert');
-    expect(alert).toHaveTextContent(/mhunter@prodigyinteractive\.com/i);
+    expect(await screen.findByRole('button', { name: /form integration in progress/i })).toBeDisabled();
+    expect(await screen.findByRole('link', { name: /mhunter\.locus@gmail\.com/i })).toHaveAttribute(
+      'href',
+      'mailto:mhunter.locus@gmail.com'
+    );
   });
 
   it('positions MattGPT for both services or portfolio help and project scoping Q&A', async () => {
