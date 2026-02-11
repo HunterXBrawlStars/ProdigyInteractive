@@ -103,14 +103,6 @@ export const portfolioItems: PortfolioItem[] = [
     href: 'https://thepodcasttrailer.com/',
     category: 'clients',
     tags: ['Client', 'Brand Site']
-  },
-  {
-    title: 'More PLProdigy Tools (Stub)',
-    description:
-      'Additional tools and game links will be expanded here as the portfolio is finalized.',
-    href: 'https://powerleagueprodigy.com/',
-    category: 'experiments',
-    tags: ['Stub', 'Future Additions']
   }
 ];
 
@@ -139,7 +131,7 @@ export const engagementModels: EngagementModel[] = [
     title: 'Sprint Build',
     description:
       'A focused sprint to launch a revenue-driving website, app module, or AI-powered workflow fast.',
-    timeline: '2-4 Weeks',
+    timeline: '1-3 Weeks',
     bestFor: 'Teams that need measurable business outcomes in weeks, not months.',
     deliverables: ['Scoping + architecture', 'Production implementation', 'Launch-ready handoff + KPI baseline'],
     ctaLabel: primaryCtaLabel,
@@ -149,7 +141,7 @@ export const engagementModels: EngagementModel[] = [
     title: 'Product Launch',
     description:
       'End-to-end design and development for a major release with performance tracking and automation hooks.',
-    timeline: '6-10 Weeks',
+    timeline: '4-8 Weeks',
     bestFor: 'Businesses shipping a new product or rebuilding their digital foundation.',
     deliverables: ['Brand-aligned UI system', 'Web/mobile/game build', 'Analytics + SEO/AIEO + automation setup'],
     ctaLabel: primaryCtaLabel,
@@ -169,9 +161,9 @@ export const engagementModels: EngagementModel[] = [
 
 export const localSignals: LocalSignal[] = [
   {
-    label: 'DFW-first, remote-ready',
+    label: 'Texas-based, nationwide-ready',
     detail:
-      'Primary focus on Dallas and Fort Worth businesses, with delivery systems built for nationwide collaboration.'
+      'Based in Texas, with delivery systems built to support both nearby teams and remote clients across the country.'
   },
   {
     label: 'Built for local conversion intent',
@@ -182,42 +174,52 @@ export const localSignals: LocalSignal[] = [
     label: 'Engineered for AI discovery',
     detail:
       'Content is structured so AI assistants can cite services, process, and proof points with clear factual snippets.'
+  },
+  {
+    label: 'Focused on efficiency gains',
+    detail:
+      'AI and automation recommendations prioritize real outcomes like faster workflows, lower manual effort, and measurable operating cost savings.'
   }
 ];
 
 export const aiAnswerItems: AiAnswerItem[] = [
   {
-    prompt: 'Who should hire Prodigy Interactive in DFW?',
+    prompt: 'Who should hire Prodigy Interactive?',
     response:
-      'Small and mid-size Dallas/Fort Worth businesses that need fast, modern execution across web, app, or game products.'
+      'Small and mid-size businesses that need solutions for quick and quality execution across web, app, or AI systems.'
   },
   {
-    prompt: 'What services are offered?',
+    prompt: 'What types of solutions can you offer my business?',
     response:
-      'Web design and hosting, mobile app development (iOS/Android), game development, AI integration and technical consulting, digital marketing, SEO, and AIEO, all focused on growth and efficiency.'
+      'Web design and hosting, mobile app development (iOS/Android), AI integration and technical consulting, digital marketing, SEO, and AIEO, all focused on growth and efficiency.'
   },
   {
     prompt: 'What makes this team different?',
     response:
-      'Hands-on delivery that pairs modern product quality with AI-driven process improvements to increase speed and reduce costs.'
+      'We have been there. Every business is unique, and unique businesses require distinct, custom solutions to serve their customers and keep their costs low. We will take the time to listen to your needs and recommend the best solution for your organization, not just re-package other online solutions. We offer hands-on delivery for digital solutions that make sense for you and your business, without robbing the bank.'
   }
 ];
 
 export const teamStubs: TeamMemberStub[] = [
   {
-    displayName: 'Team Member Name (Stub)',
-    role: 'Role / Specialty',
-    note: 'Profile details pending.'
+    displayName: 'Matthew Hunter',
+    role: 'Founder / Developer',
+    note: 'Matthew founded Prodigy Interactive in February 2025 after a decade in supply chain systems integration. With experience spanning product management, sales engineering, and full-stack development, he specializes in turning complex ideas into clean, scalable digital products. He blends technical depth with business strategy to build tools that are both powerful and practical.'
   },
   {
-    displayName: 'Team Member Name (Stub)',
-    role: 'Role / Specialty',
-    note: 'Profile details pending.'
+    displayName: 'Bailey Blomberg',
+    role: 'Lead Design Consultant',
+    note: 'Bailey brings refined taste and intentional design to every project. With a background in interior design and bridal hair and makeup, she understands how aesthetics shape experience. She ensures that every product feels elevated, cohesive, and thoughtfully curated. And yes — she’s Matthew’s wife… though she was hired for her eye long before that title applied.'
   },
   {
-    displayName: 'Team Member Name (Stub)',
-    role: 'Role / Specialty',
-    note: 'Profile details pending.'
+    displayName: 'Jakub Terlaga',
+    role: 'Digital Asset Manager',
+    note: 'Jakub oversees digital asset production and refinement, ensuring every visual and media component meets a high standard of clarity and polish. From editing to optimization, he keeps creative output organized, consistent, and production-ready.'
+  },
+  {
+    displayName: 'Sydney Applegate',
+    role: 'Social Media Consultant',
+    note: 'Sydney brings over five years of social media strategy and content development experience. She helps translate brand identity into engaging, platform-native storytelling — balancing analytics with creativity to grow audience trust and visibility.'
   }
 ];
 
@@ -234,9 +236,9 @@ export const testimonialStubs: TestimonialStub[] = [
 
 export const faqItems: FaqItem[] = [
   {
-    question: 'Do you only work with Dallas / Fort Worth clients?',
+    question: 'Do you only work with local clients?',
     answer:
-      'DFW is a focus region, but Prodigy Interactive supports remote projects from anywhere.'
+      'No. Prodigy Interactive works with both local and remote teams, with delivery built for nationwide collaboration.'
   },
   {
     question: 'Can you handle both design and development?',
@@ -251,11 +253,11 @@ export const faqItems: FaqItem[] = [
   {
     question: 'Is MattGPT live yet?',
     answer:
-      'Not yet. The current site includes a stubbed MattGPT interface that will connect to ChatGPT later.'
+      'Yes. MattGPT is available to help visitors explore services, portfolio examples, and project scoping questions in real time.'
   }
 ];
 
-export const heroFocuses = ['Web Design', 'Mobile Apps', 'Game Development', 'AI Integration'] as const;
+export const heroFocuses = ['Web Design', 'Mobile Apps', 'Technical Consulting', 'AI Integration'] as const;
 
 export const mattGptIntro =
   'MattGPT will support both services-and-portfolio guidance and project scoping Q&A. ChatGPT integration is coming soon.';

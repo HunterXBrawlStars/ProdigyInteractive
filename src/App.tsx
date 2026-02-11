@@ -16,9 +16,6 @@ const PortfolioSection = lazy(() =>
 const ProcessSection = lazy(() =>
   import('./components/sections/ProcessSection').then((module) => ({ default: module.ProcessSection }))
 );
-const TestimonialsSection = lazy(() =>
-  import('./components/sections/TestimonialsSection').then((module) => ({ default: module.TestimonialsSection }))
-);
 const TeamSection = lazy(() =>
   import('./components/sections/TeamSection').then((module) => ({ default: module.TeamSection }))
 );
@@ -68,7 +65,6 @@ function App() {
         <EngagementSection />
         <PortfolioSection />
         <ProcessSection />
-        <TestimonialsSection />
         <TeamSection />
         <FaqSection />
         <ContactSection />

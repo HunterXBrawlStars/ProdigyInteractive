@@ -8,11 +8,11 @@ export function LocalPresenceSection() {
       <Container maxWidth="xl">
         <Typography className="section-eyebrow">Local Presence</Typography>
         <Typography component="h2" variant="h2" className="section-title" sx={{ mb: 2 }}>
-          Dallas-Fort Worth Digital Product Partner
+          Local Partner, National Reach
         </Typography>
         <Typography sx={{ color: 'var(--pi-muted)', mb: 4, maxWidth: '70ch' }}>
-          Prodigy Interactive helps DFW businesses launch and scale websites, apps, and interactive products with
-          modern execution quality and measurable growth focus.
+          Prodigy Interactive helps growth-focused businesses launch and scale websites, apps, and interactive
+          products with modern execution quality and measurable growth focus.
         </Typography>
 
         <Box
@@ -45,7 +45,7 @@ export function LocalPresenceSection() {
             sx={{ p: 2.6 }}
           >
             <Typography variant="h6" sx={{ mb: 1.5 }}>
-              AI Answer Readiness
+              Client Fit Q&A
             </Typography>
             <Stack spacing={1.2}>
               {aiAnswerItems.map((item) => (
