@@ -13,7 +13,7 @@ export function ServicesSection() {
             fontSize: { xs: '2rem', md: '3.2rem' },
             lineHeight: 1.03,
             mb: 2,
-            maxWidth: { xs: '19ch', md: '21ch' }
+            maxWidth: { xs: '19ch', md: '40ch' }
           }}
         >
           End-to-end digital execution.
