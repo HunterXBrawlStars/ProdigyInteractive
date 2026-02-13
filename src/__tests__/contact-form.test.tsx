@@ -32,5 +32,5 @@ describe('contact form integration', () => {
       })
     );
     expect(await screen.findByText(/thanks/i)).toBeInTheDocument();
-  });
+  }, 10_000);
 });

@@ -1,4 +1,5 @@
 const MAX_FIELD_CHARS = 1000;
+const MAX_SUBJECT_CHARS = 200;
 const RATE_LIMIT_WINDOW_MS = 60_000;
 const RATE_LIMIT_MAX_REQUESTS = 12;
 
@@ -57,6 +58,14 @@ function sanitizeText(value) {
   }
 
   return value.trim().slice(0, MAX_FIELD_CHARS);
+}
+
+function sanitizeSubject(value) {
+  if (typeof value !== 'string') {
+    return '';
+  }
+
+  return value.trim().slice(0, MAX_SUBJECT_CHARS);
 }
 
 function isValidEmail(email) {
@@ -128,6 +137,10 @@ export default async function handler(req, res) {
   const email = sanitizeText(body.email);
   const company = sanitizeText(body.company);
   const projectScope = sanitizeText(body.projectScope);
+  const source = sanitizeText(body.source).toLowerCase();
+  const requestedSubject = sanitizeSubject(body.subject);
+
+  const isMattGpt = source === 'mattgpt';
 
   if (!name || name.length < 2) {
     return res.status(400).json({ error: 'Please provide your name.' });
@@ -144,16 +157,17 @@ export default async function handler(req, res) {
   const toEmail = process.env.CONTACT_TO_EMAIL || 'mhunter@prodigyinteractive.io';
   const fromEmail = process.env.CONTACT_FROM_EMAIL || 'onboarding@resend.dev';
 
-  const subject = `New inquiry: ${name}${company ? ` (${company})` : ''}`;
+  const subject = requestedSubject || `New inquiry: ${name}${company ? ` (${company})` : ''}`;
   const userAgent = typeof req?.headers?.['user-agent'] === 'string' ? req.headers['user-agent'] : '';
+  const messageLabel = isMattGpt ? 'Email draft:' : 'Project scope:';
   const text = [
-    'New website inquiry',
+    isMattGpt ? 'New inquiry (MattGPT)' : 'New website inquiry',
     '',
     `Name: ${name}`,
     `Email: ${email}`,
     company ? `Company: ${company}` : 'Company: (not provided)',
     '',
-    'Project scope:',
+    messageLabel,
     projectScope,
     '',
     `IP: ${clientId}`,
@@ -179,4 +193,3 @@ export default async function handler(req, res) {
     });
   }
 }
-

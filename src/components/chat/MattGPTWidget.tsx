@@ -1,4 +1,17 @@
-import { Alert, Box, Button, Drawer, IconButton, Stack, TextField, Typography } from '@mui/material';
+import {
+  Alert,
+  Box,
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  Drawer,
+  IconButton,
+  Stack,
+  TextField,
+  Typography
+} from '@mui/material';
 import { motion } from 'framer-motion';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
@@ -7,6 +20,7 @@ import { MdClose, MdSmartToy } from 'react-icons/md';
 import { mattGptIntro } from '../../content/siteContent';
 import { triggerHaptic } from '../../lib/haptics';
 import { type MattGptMessage, requestMattGptReply } from '../../lib/mattGptApi';
+import { submitContact } from '../../lib/contactApi';
 
 const COOLDOWN_MS = 5_000;
 const CLIENT_LIMIT_PER_MINUTE = 6;
@@ -23,6 +37,13 @@ interface BlockNoticeState {
   type: 'cooldown' | 'client-limit';
   untilMs: number;
 }
+
+interface MattGptEmailDraft {
+  subject: string;
+  body: string;
+}
+
+type MattGptUiMessage = MattGptMessage & { emailDraft?: MattGptEmailDraft };
 
 function toCountdownSeconds(milliseconds: number): number {
   return Math.max(1, Math.ceil(milliseconds / 1000));
@@ -108,6 +129,46 @@ function createInitialMessages(): MattGptMessage[] {
   ];
 }
 
+function extractEmailDraft(markdown: string): { cleaned: string; draft: MattGptEmailDraft | null } {
+  const pattern = /```mattgpt_email\s*\n([\s\S]*?)\n```/i;
+  const match = markdown.match(pattern);
+  if (!match) {
+    return { cleaned: markdown, draft: null };
+  }
+
+  const rawJson = match[1]?.trim() ?? '';
+  if (!rawJson) {
+    return { cleaned: markdown.replace(pattern, '').trim(), draft: null };
+  }
+
+  try {
+    const parsed = JSON.parse(rawJson) as unknown;
+    if (
+      parsed &&
+      typeof parsed === 'object' &&
+      'subject' in parsed &&
+      'body' in parsed &&
+      typeof (parsed as { subject: unknown }).subject === 'string' &&
+      typeof (parsed as { body: unknown }).body === 'string'
+    ) {
+      const draft: MattGptEmailDraft = {
+        subject: (parsed as { subject: string }).subject.trim(),
+        body: (parsed as { body: string }).body.trim()
+      };
+
+      const cleaned = markdown
+        .replace(pattern, '')
+        .replace(/\n{3,}/g, '\n\n')
+        .trim();
+      return { cleaned, draft };
+    }
+  } catch {
+    // Ignore JSON parse issues and fall back to rendering the original content.
+  }
+
+  return { cleaned: markdown, draft: null };
+}
+
 function createInputFieldName(): string {
   const token = Math.random().toString(36).slice(2, 10);
   return `mattgpt_prompt_${token}`;
@@ -157,8 +218,18 @@ export function MattGPTWidget() {
   const [blockNotice, setBlockNotice] = useState<BlockNoticeState | null>(null);
   const [clockMs, setClockMs] = useState(() => Date.now());
   const [inputFieldName, setInputFieldName] = useState(() => createInputFieldName());
-  const [messages, setMessages] = useState<MattGptMessage[]>(() => createInitialMessages());
+  const [messages, setMessages] = useState<MattGptUiMessage[]>(() => createInitialMessages());
   const sessionRef = useRef(0);
+
+  const [emailDialogOpen, setEmailDialogOpen] = useState(false);
+  const [emailDraft, setEmailDraft] = useState<MattGptEmailDraft | null>(null);
+  const [senderName, setSenderName] = useState('');
+  const [senderEmail, setSenderEmail] = useState('');
+  const [senderCompany, setSenderCompany] = useState('');
+  const [emailSubject, setEmailSubject] = useState('');
+  const [emailBody, setEmailBody] = useState('');
+  const [emailSendState, setEmailSendState] = useState<'idle' | 'sending' | 'sent' | 'error'>('idle');
+  const [emailSendError, setEmailSendError] = useState('');
 
   const blockNoticeRemainingMs = blockNotice ? Math.max(0, blockNotice.untilMs - clockMs) : 0;
   const blockMessage =
@@ -209,6 +280,15 @@ export function MattGPTWidget() {
     setClockMs(Date.now());
     setInputFieldName(createInputFieldName());
     setMessages(createInitialMessages());
+    setEmailDialogOpen(false);
+    setEmailDraft(null);
+    setSenderName('');
+    setSenderEmail('');
+    setSenderCompany('');
+    setEmailSubject('');
+    setEmailBody('');
+    setEmailSendState('idle');
+    setEmailSendError('');
   };
 
   const openMattGpt = () => {
@@ -223,6 +303,58 @@ export function MattGPTWidget() {
     sessionRef.current += 1;
     resetSessionState();
     setOpen(false);
+  };
+
+  const openEmailDialog = (draftToSend: MattGptEmailDraft) => {
+    triggerHaptic('light');
+    setEmailDraft(draftToSend);
+    setEmailSubject(draftToSend.subject);
+    setEmailBody(draftToSend.body);
+    setEmailSendState('idle');
+    setEmailSendError('');
+    setEmailDialogOpen(true);
+  };
+
+  const closeEmailDialog = () => {
+    triggerHaptic('light');
+    setEmailDialogOpen(false);
+  };
+
+  const canSendEmail =
+    Boolean(senderName.trim()) &&
+    Boolean(senderEmail.trim()) &&
+    Boolean(emailSubject.trim()) &&
+    Boolean(emailBody.trim()) &&
+    emailSendState !== 'sending';
+
+  const onConfirmSendEmail = async () => {
+    if (!emailDraft || !canSendEmail) {
+      return;
+    }
+
+    setEmailSendState('sending');
+    setEmailSendError('');
+    triggerHaptic('medium');
+
+    try {
+      await submitContact({
+        name: senderName.trim(),
+        email: senderEmail.trim(),
+        company: senderCompany.trim(),
+        projectScope: emailBody.trim(),
+        website: '',
+        subject: emailSubject.trim(),
+        source: 'mattgpt'
+      });
+
+      setEmailSendState('sent');
+      triggerHaptic('success');
+    } catch (error) {
+      const message = error instanceof Error && error.message ? error.message : 'Unable to send email right now.';
+      setEmailSendState('error');
+      setEmailSendError(message);
+      triggerHaptic('light');
+    }
   };
 
   const onSubmit = async (event: FormEvent<HTMLFormElement>) => {
@@ -259,7 +391,7 @@ export function MattGPTWidget() {
     setCooldownUntilMs(now + COOLDOWN_MS);
     setBlockNotice(null);
 
-    const historyForRequest = [...messages];
+    const historyForRequest = messages.map(({ role, content }) => ({ role, content }));
     const userMessage: MattGptMessage = { role: 'user', content: message };
 
     setDraft('');
@@ -272,7 +404,8 @@ export function MattGPTWidget() {
       if (activeSession !== sessionRef.current) {
         return;
       }
-      setMessages((current) => [...current, { role: 'assistant', content: reply }]);
+      const { cleaned, draft: emailDraftFromReply } = extractEmailDraft(reply);
+      setMessages((current) => [...current, { role: 'assistant', content: cleaned, emailDraft: emailDraftFromReply ?? undefined }]);
       triggerHaptic('success');
     } catch (error) {
       if (activeSession !== sessionRef.current) {
@@ -380,6 +513,18 @@ export function MattGPTWidget() {
                         <ReactMarkdown remarkPlugins={[remarkGfm]} skipHtml>
                           {entry.content}
                         </ReactMarkdown>
+                        {entry.emailDraft ? (
+                          <Stack direction="row" spacing={1} sx={{ mt: 1.1 }}>
+                            <Button
+                              size="small"
+                              variant="contained"
+                              onClick={() => openEmailDialog(entry.emailDraft as MattGptEmailDraft)}
+                              sx={{ textTransform: 'none' }}
+                            >
+                              Send to Prodigy Interactive
+                            </Button>
+                          </Stack>
+                        ) : null}
                       </Box>
                     ) : (
                       <Typography sx={{ color: 'var(--pi-text)', fontSize: '.92rem', whiteSpace: 'pre-wrap' }}>
@@ -437,6 +582,74 @@ export function MattGPTWidget() {
                 {blockMessage}
               </Alert>
             ) : null}
+
+            <Dialog
+              open={emailDialogOpen}
+              onClose={closeEmailDialog}
+              aria-labelledby="mattgpt-email-dialog-title"
+              fullWidth
+              maxWidth="sm"
+            >
+              <DialogTitle id="mattgpt-email-dialog-title">Send email to Prodigy Interactive</DialogTitle>
+              <DialogContent dividers>
+                <Stack spacing={1.4} sx={{ pt: 0.5 }}>
+                  <Typography sx={{ color: 'var(--pi-muted)', fontSize: '.9rem' }}>
+                    Review the draft and confirm. We&apos;ll send it to our team and reply to you by email.
+                  </Typography>
+                  <TextField
+                    label="Your name"
+                    value={senderName}
+                    onChange={(event) => setSenderName(event.target.value)}
+                    autoComplete="name"
+                  />
+                  <TextField
+                    label="Your email"
+                    value={senderEmail}
+                    onChange={(event) => setSenderEmail(event.target.value)}
+                    autoComplete="email"
+                  />
+                  <TextField
+                    label="Company (optional)"
+                    value={senderCompany}
+                    onChange={(event) => setSenderCompany(event.target.value)}
+                    autoComplete="organization"
+                  />
+                  <TextField
+                    label="Subject"
+                    value={emailSubject}
+                    onChange={(event) => setEmailSubject(event.target.value)}
+                  />
+                  <TextField
+                    label="Email body"
+                    value={emailBody}
+                    onChange={(event) => setEmailBody(event.target.value)}
+                    multiline
+                    minRows={6}
+                  />
+
+                  {emailSendState === 'sent' ? (
+                    <Alert severity="success">Email sent.</Alert>
+                  ) : null}
+
+                  {emailSendState === 'error' ? (
+                    <Alert severity="warning">{emailSendError || 'Unable to send email right now.'}</Alert>
+                  ) : null}
+                </Stack>
+              </DialogContent>
+              <DialogActions>
+                <Button onClick={closeEmailDialog} sx={{ textTransform: 'none' }}>
+                  {emailSendState === 'sent' ? 'Close' : 'Cancel'}
+                </Button>
+                <Button
+                  variant="contained"
+                  onClick={onConfirmSendEmail}
+                  disabled={!canSendEmail || emailSendState === 'sent'}
+                  sx={{ textTransform: 'none' }}
+                >
+                  {emailSendState === 'sending' ? 'Sending…' : 'Confirm send'}
+                </Button>
+              </DialogActions>
+            </Dialog>
           </Stack>
         </Box>
       </Drawer>

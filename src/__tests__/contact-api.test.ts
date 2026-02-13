@@ -148,5 +148,35 @@ describe('contact api', () => {
     expect(fetchMock).toHaveBeenCalledTimes(1);
     expect(fetchMock.mock.calls[0]?.[0]).toMatch(/api\.resend\.com\/emails/i);
   });
-});
 
+  it('uses a provided subject and includes MattGPT email draft labeling when source is mattgpt', async () => {
+    const fetchMock = vi.fn().mockResolvedValue({
+      ok: true,
+      json: async () => ({ id: 'email_123' })
+    });
+    vi.stubGlobal('fetch', fetchMock);
+
+    const res = createRes();
+    await contactHandler(
+      createReq({
+        body: {
+          name: 'Jane Doe',
+          email: 'jane@company.com',
+          company: 'Company',
+          projectScope: 'Email body from MattGPT.',
+          subject: 'Mobile app MVP scoping',
+          source: 'mattgpt'
+        }
+      }),
+      res
+    );
+
+    expect(res.getStatus()).toBe(200);
+    expect(fetchMock).toHaveBeenCalledTimes(1);
+
+    const requestOptions = fetchMock.mock.calls[0]?.[1] as RequestInit | undefined;
+    const sentPayload = JSON.parse(String(requestOptions?.body ?? '{}')) as Record<string, unknown>;
+    expect(sentPayload.subject).toBe('Mobile app MVP scoping');
+    expect(String(sentPayload.text)).toMatch(/Email draft/i);
+  });
+});

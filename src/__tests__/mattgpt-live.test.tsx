@@ -300,4 +300,88 @@ describe('MattGPT live chat', () => {
       expect.arrayContaining(['Company context', 'Primary goals', 'Core features'])
     );
   });
+
+  it('offers to send a quote-ready email draft via Resend after confirmation', async () => {
+    const mattGptReply = [
+      'Here is a quote-ready email you can send to our team.',
+      '',
+      '**Subject:** Mobile app MVP scoping',
+      '',
+      '**Body:**',
+      'Hi Prodigy Interactive,',
+      '',
+      'I want to build a mobile app for my business. The primary goal is to reduce support costs.',
+      '',
+      'Timeline: 6-8 weeks.',
+      'Budget: $15k-$25k.',
+      '',
+      'Thanks,',
+      'Jane',
+      '',
+      '```mattgpt_email',
+      JSON.stringify(
+        {
+          subject: 'Mobile app MVP scoping',
+          body: 'Hi Prodigy Interactive,\n\nI want to build a mobile app for my business. The primary goal is to reduce support costs.\n\nTimeline: 6-8 weeks.\nBudget: $15k-$25k.\n\nThanks,\nJane'
+        },
+        null,
+        2
+      ),
+      '```'
+    ].join('\n');
+
+    const fetchMock = vi.fn().mockImplementation((input: RequestInfo | URL) => {
+      const url = typeof input === 'string' ? input : input.toString();
+      if (url === '/api/mattgpt') {
+        return Promise.resolve({
+          ok: true,
+          json: async () => ({ reply: mattGptReply })
+        });
+      }
+      if (url === '/api/contact') {
+        return Promise.resolve({
+          ok: true,
+          json: async () => ({ ok: true })
+        });
+      }
+      throw new Error(`Unexpected request to ${url}`);
+    });
+
+    vi.stubGlobal('fetch', fetchMock);
+
+    const user = userEvent.setup();
+    render(<MattGPTWidget />);
+
+    await user.click(screen.getByRole('button', { name: /open mattgpt/i }));
+    await user.type(await screen.findByLabelText(/ask mattgpt/i), 'I want to build an app.');
+    await user.click(screen.getByRole('button', { name: /send/i }));
+
+    expect(await screen.findByText(/here is a quote-ready email you can send/i)).toBeInTheDocument();
+    expect(screen.queryByText(/"subject":/i)).not.toBeInTheDocument();
+
+    const sendDraftButton = await screen.findByRole('button', { name: /send to prodigy interactive/i });
+    await user.click(sendDraftButton);
+
+    expect(await screen.findByRole('dialog', { name: /send email to prodigy interactive/i })).toBeInTheDocument();
+
+    await user.type(screen.getByLabelText(/your name/i), 'Jane Doe');
+    await user.type(screen.getByLabelText(/your email/i), 'jane@company.com');
+
+    await user.click(screen.getByRole('button', { name: /confirm send/i }));
+
+    const contactCall = fetchMock.mock.calls.find((call) => call[0] === '/api/contact');
+    expect(contactCall).toBeTruthy();
+    const [, options] = contactCall as unknown as [string, RequestInit];
+    expect(options.method).toBe('POST');
+    const parsed = JSON.parse(String(options.body)) as Record<string, unknown>;
+    expect(parsed).toMatchObject({
+      name: 'Jane Doe',
+      email: 'jane@company.com',
+      source: 'mattgpt',
+      subject: 'Mobile app MVP scoping'
+    });
+    expect(String(parsed.projectScope)).toMatch(/reduce support costs/i);
+
+    expect(await screen.findByText(/email sent/i)).toBeInTheDocument();
+  });
 });

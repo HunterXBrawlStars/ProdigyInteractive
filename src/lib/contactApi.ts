@@ -5,6 +5,9 @@ export interface ContactPayload {
   projectScope: string;
   // Honeypot field. Must remain empty for legitimate users.
   website?: string;
+  // Optional: allow MattGPT to pass through a drafted subject/body.
+  subject?: string;
+  source?: 'contact' | 'mattgpt';
 }
 
 interface ContactApiSuccess {
@@ -54,4 +57,3 @@ export async function submitContact(payload: ContactPayload): Promise<void> {
     throw new Error('Unexpected response from contact service. Please try again.');
   }
 }
-
