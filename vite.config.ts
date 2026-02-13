@@ -4,6 +4,7 @@ import { defineConfig, loadEnv, type Plugin } from 'vite';
 import react from '@vitejs/plugin-react';
 
 const mattGptHandlerModulePath = new URL('./api/mattgpt.js', import.meta.url).href;
+const contactHandlerModulePath = new URL('./api/contact.js', import.meta.url).href;
 
 interface VercelLikeResponse {
   status: (code: number) => VercelLikeResponse;
@@ -75,6 +76,58 @@ function mattGptDevApiPlugin(): Plugin {
   };
 }
 
+function contactDevApiPlugin(): Plugin {
+  return {
+    name: 'contact-dev-api-bridge',
+    apply: 'serve',
+    configureServer(server) {
+      server.middlewares.use('/api/contact', async (req, res, next) => {
+        try {
+          const { default: contactHandler } = await import(contactHandlerModulePath);
+          const rawBody = await readRawBody(req);
+
+          const vercelLikeReq = {
+            method: req.method,
+            headers: req.headers,
+            body: rawBody
+          };
+
+          let statusCode = 200;
+          const vercelLikeRes: VercelLikeResponse = {
+            status(code: number) {
+              statusCode = code;
+              return this;
+            },
+            json(payload: unknown) {
+              if (!res.writableEnded) {
+                res.statusCode = statusCode;
+                res.setHeader('Content-Type', 'application/json');
+                res.end(JSON.stringify(payload));
+              }
+
+              return this;
+            }
+          };
+
+          await contactHandler(vercelLikeReq, vercelLikeRes);
+        } catch (error) {
+          if (!res.writableEnded) {
+            const status = (error as { status?: number })?.status ?? 500;
+            const message = error instanceof Error ? error.message : 'Unexpected local API bridge error.';
+            res.statusCode = status;
+            res.setHeader('Content-Type', 'application/json');
+            res.end(JSON.stringify({ error: message }));
+          }
+        } finally {
+          if (!res.writableEnded) {
+            next();
+          }
+        }
+      });
+    }
+  };
+}
+
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), '');
 
@@ -82,8 +135,20 @@ export default defineConfig(({ mode }) => {
     process.env.OPENAI_API_KEY = env.OPENAI_API_KEY;
   }
 
+  if (env.RESEND_API_KEY && !process.env.RESEND_API_KEY) {
+    process.env.RESEND_API_KEY = env.RESEND_API_KEY;
+  }
+
+  if (env.CONTACT_TO_EMAIL && !process.env.CONTACT_TO_EMAIL) {
+    process.env.CONTACT_TO_EMAIL = env.CONTACT_TO_EMAIL;
+  }
+
+  if (env.CONTACT_FROM_EMAIL && !process.env.CONTACT_FROM_EMAIL) {
+    process.env.CONTACT_FROM_EMAIL = env.CONTACT_FROM_EMAIL;
+  }
+
   return {
-    plugins: [react(), mattGptDevApiPlugin()],
+    plugins: [react(), mattGptDevApiPlugin(), contactDevApiPlugin()],
     build: {
       rollupOptions: {
         output: {

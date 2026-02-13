@@ -45,11 +45,11 @@ describe('Prodigy Interactive homepage', () => {
     expect(await screen.findByText(/services and portfolio guidance/i)).toBeInTheDocument();
   });
 
-  it('shows launch-phase contact guidance and direct email while form is disabled', async () => {
+  it('shows contact guidance and direct email alongside the contact form', async () => {
     render(<App />);
 
-    expect(await screen.findByText(/we just launched this site/i)).toBeInTheDocument();
-    expect(await screen.findByRole('button', { name: /form integration in progress/i })).toBeDisabled();
+    expect(await screen.findByText(/use the form below or email/i)).toBeInTheDocument();
+    expect(await screen.findByRole('button', { name: /^send$/i })).toBeDisabled();
     expect(await screen.findByRole('link', { name: /mhunter@prodigyinteractive\.io/i })).toHaveAttribute(
       'href',
       'mailto:mhunter@prodigyinteractive.io'

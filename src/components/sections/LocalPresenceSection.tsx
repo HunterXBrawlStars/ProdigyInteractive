@@ -25,8 +25,8 @@ export function LocalPresenceSection() {
           </Box>
         </Typography>
         <Typography sx={{ color: 'var(--pi-muted)', mb: 4, maxWidth: '70ch' }}>
-          Prodigy Interactive helps growth-focused businesses launch and scale websites, apps, and interactive
-          products with modern execution quality and measurable growth focus.
+          Prodigy Interactive helps growth-focused teams across Dallas-Fort Worth and beyond launch websites, apps,
+          games, and AI workflows with measurable revenue and efficiency outcomes.
         </Typography>
 
         <Box

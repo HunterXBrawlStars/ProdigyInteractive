@@ -175,6 +175,11 @@ export const engagementModels: EngagementModel[] = [
 
 export const localSignals: LocalSignal[] = [
   {
+    label: 'Dallas-Fort Worth metro coverage',
+    detail:
+      'We regularly support teams in Dallas, Fort Worth, Plano, Frisco, Arlington, Irving, Richardson, McKinney, Denton, and nearby North Texas markets.'
+  },
+  {
     label: 'Texas-based, nationwide-ready',
     detail:
       'Based in Texas, with delivery systems built to support both nearby teams and remote clients across the country.'
@@ -249,6 +254,26 @@ export const testimonialStubs: TestimonialStub[] = [
 ];
 
 export const faqItems: FaqItem[] = [
+  {
+    question: 'How do I make my own app for my business?',
+    answer:
+      'Start with a focused MVP: define user problem, primary business goal, must-have features, target platform, timeline, and budget range. We can help you scope the right first release and build it without wasting cycles on low-impact features.'
+  },
+  {
+    question: 'How do I build a website that actually generates leads?',
+    answer:
+      'Prioritize conversion architecture before visual polish: clear offer, proof points, focused CTA, fast load speed, local-intent pages, and analytics. We design and ship sites that tie directly to booked calls and qualified pipeline.'
+  },
+  {
+    question: 'How do I create and launch my own game?',
+    answer:
+      'Treat launch as a product system, not just a build. Start with core game loop, retention hooks, content cadence, telemetry, and post-launch update plan. We can scope, prototype, and ship game experiences with measurable engagement targets.'
+  },
+  {
+    question: 'How can I use AI in my business to cut costs?',
+    answer:
+      'The fastest wins are usually workflow automation in sales ops, support, and internal reporting. We identify repetitive manual steps, implement AI-assisted flows, and track time and cost savings so improvements are measurable.'
+  },
   {
     question: 'Do you only work with local clients?',
     answer:

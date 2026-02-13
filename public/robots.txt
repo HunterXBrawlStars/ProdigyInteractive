@@ -1,4 +1,5 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://prodigyinteractive.com/sitemap.xml
+Host: https://prodigyinteractive.io
+Sitemap: https://prodigyinteractive.io/sitemap.xml

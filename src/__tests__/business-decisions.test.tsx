@@ -16,7 +16,7 @@ describe('applied business decisions', () => {
     const pricingMentions = await screen.findAllByText(/custom quote only/i);
     expect(pricingMentions.length).toBeGreaterThan(0);
 
-    expect(await screen.findByRole('button', { name: /form integration in progress/i })).toBeDisabled();
+    expect(await screen.findByRole('button', { name: /^send$/i })).toBeDisabled();
     expect(await screen.findByRole('link', { name: /mhunter@prodigyinteractive\.io/i })).toHaveAttribute(
       'href',
       'mailto:mhunter@prodigyinteractive.io'

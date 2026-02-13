@@ -7,7 +7,11 @@ describe('structured data and delivery workflow', () => {
 
     expect(html).toContain('"@type":"LocalBusiness"');
     expect(html).toContain('"name":"Prodigy Interactive"');
-    expect(html).toContain('"serviceArea":["Texas","United States"]');
+    expect(html).toContain('Dallas');
+    expect(html).toContain('Fort Worth');
+    expect(html).toContain('"@type":"FAQPage"');
+    expect(html).toContain('How do I make my own app for my business?');
+    expect(html).toContain('How can I use AI in my business to cut costs?');
   });
 
   it('defines a CI workflow that runs lint, test, and build', () => {

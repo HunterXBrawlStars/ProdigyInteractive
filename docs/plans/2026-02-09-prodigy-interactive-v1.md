@@ -553,7 +553,7 @@ Expected: FAIL.
 
 **Step 3: Implement minimal SEO layer**
 - Add title/description/OG tags in `index.html`.
-- Set canonical domain placeholder `https://prodigyinteractive.com`.
+- Set canonical domain placeholder `https://prodigyinteractive.io`.
 - Add robots/sitemap stubs.
 - Include logo asset in public assets path.
 
