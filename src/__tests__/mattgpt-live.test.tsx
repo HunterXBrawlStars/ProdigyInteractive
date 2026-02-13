@@ -385,6 +385,48 @@ describe('MattGPT live chat', () => {
     expect(await screen.findByText(/email sent/i)).toBeInTheDocument();
   });
 
+  it('adds breathing room to intake-summary email drafts in the dialog', async () => {
+    const intakeBody = [
+      'Company/Contact: Not provided',
+      'Project summary: Build a super-simple app whose primary purpose is to "do fun stuff."',
+      'Requested deliverables: Minimal viable app (platform unspecified).',
+      'Integrations: Not provided',
+      'Timeline: Flexible / Not provided',
+      'Budget: Flexible / Not provided',
+      'Constraints/Notes: Client provided minimal details.'
+    ].join('\n');
+
+    const mattGptReply = [
+      'Draft is ready. Please confirm send.',
+      '',
+      '```mattgpt_email',
+      JSON.stringify({ subject: 'Intake: simple app', body: intakeBody }, null, 2),
+      '```'
+    ].join('\n');
+
+    const fetchMock = vi.fn().mockResolvedValue({
+      ok: true,
+      json: async () => ({ reply: mattGptReply })
+    });
+
+    vi.stubGlobal('fetch', fetchMock);
+
+    const user = userEvent.setup();
+    render(<MattGPTWidget />);
+
+    await user.click(screen.getByRole('button', { name: /open mattgpt/i }));
+    await user.type(await screen.findByLabelText(/ask mattgpt/i), 'Draft an intake email.');
+    await user.click(screen.getByRole('button', { name: /send/i }));
+
+    const sendDraftButton = await screen.findByRole('button', { name: /send to prodigy interactive/i });
+    await user.click(sendDraftButton);
+
+    const emailBodyField = await screen.findByLabelText(/email body/i);
+    const emailBodyValue = (emailBodyField as HTMLTextAreaElement).value;
+    expect(emailBodyValue).toContain('Company/Contact: Not provided\n\nProject summary:');
+    expect(emailBodyValue).toContain('Timeline: Flexible / Not provided\n\nBudget: Flexible / Not provided');
+  });
+
   it('extracts a quote-ready email draft when the model returns a generic json code block', async () => {
     const mattGptReply = [
       'Here is a quote-ready email you can send to our team.',
@@ -444,6 +486,37 @@ describe('MattGPT live chat', () => {
     await user.click(screen.getByRole('button', { name: /send/i }));
 
     expect(await screen.findByRole('button', { name: /send to prodigy interactive/i })).toBeInTheDocument();
+    expect(screen.queryByText(/"subject":/i)).not.toBeInTheDocument();
+  });
+
+  it('hides the mattgpt_email marker when the model prefixes raw JSON with the label', async () => {
+    const rawJson = JSON.stringify(
+      {
+        subject: 'Marker subject',
+        body: 'Hello team.'
+      },
+      null,
+      0
+    );
+
+    const mattGptReply = ['Draft is ready. Please confirm send.', '', 'mattgpt_email', rawJson].join('\n');
+
+    const fetchMock = vi.fn().mockResolvedValue({
+      ok: true,
+      json: async () => ({ reply: mattGptReply })
+    });
+
+    vi.stubGlobal('fetch', fetchMock);
+
+    const user = userEvent.setup();
+    render(<MattGPTWidget />);
+
+    await user.click(screen.getByRole('button', { name: /open mattgpt/i }));
+    await user.type(await screen.findByLabelText(/ask mattgpt/i), 'Draft an email.');
+    await user.click(screen.getByRole('button', { name: /send/i }));
+
+    expect(await screen.findByRole('button', { name: /send to prodigy interactive/i })).toBeInTheDocument();
+    expect(screen.queryByText(/^mattgpt_email$/i)).not.toBeInTheDocument();
     expect(screen.queryByText(/"subject":/i)).not.toBeInTheDocument();
   });
 });

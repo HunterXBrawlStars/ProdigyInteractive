@@ -225,6 +225,7 @@ function extractEmailDraft(markdown: string): { cleaned: string; draft: MattGptE
     }
 
     const cleaned = `${text.slice(0, bestStart)}${text.slice(bestEnd)}`
+      .replace(/^\s*mattgpt_email\s*$/gim, '')
       .replace(/\n{3,}/g, '\n\n')
       .trim();
     return { cleaned, draft: bestDraft };
@@ -256,6 +257,7 @@ function extractEmailDraft(markdown: string): { cleaned: string; draft: MattGptE
 
     const endIndex = startIndex + lastMatch[0].length;
     const cleaned = `${markdown.slice(0, startIndex)}${markdown.slice(endIndex)}`
+      .replace(/^\s*mattgpt_email\s*$/gim, '')
       .replace(/\n{3,}/g, '\n\n')
       .trim();
 
@@ -263,6 +265,29 @@ function extractEmailDraft(markdown: string): { cleaned: string; draft: MattGptE
   } catch {
     return { cleaned: markdown, draft: null };
   }
+}
+
+function formatEmailDraftBody(body: string): string {
+  const normalized = body.replace(/\r\n/g, '\n').trim();
+  if (!normalized) {
+    return '';
+  }
+
+  // If the model already included blank lines, preserve its formatting.
+  if (/\n\s*\n/.test(normalized)) {
+    return normalized;
+  }
+
+  const lines = normalized.split('\n').map((line) => line.trimEnd());
+  const nonEmptyLines = lines.filter((line) => line.trim().length > 0);
+  const labeledLineCount = nonEmptyLines.filter((line) => /^[^:\n]{2,80}:\s*\S/.test(line)).length;
+
+  // Intake summaries tend to be "Label: value" lines; add blank lines to improve scanability.
+  if (nonEmptyLines.length >= 3 && labeledLineCount >= 3) {
+    return nonEmptyLines.join('\n\n').trim();
+  }
+
+  return normalized;
 }
 
 function createInputFieldName(): string {
@@ -405,7 +430,7 @@ export function MattGPTWidget() {
     triggerHaptic('light');
     setEmailDraft(draftToSend);
     setEmailSubject(draftToSend.subject);
-    setEmailBody(draftToSend.body);
+    setEmailBody(formatEmailDraftBody(draftToSend.body));
     setEmailSendState('idle');
     setEmailSendError('');
     setEmailDialogOpen(true);
