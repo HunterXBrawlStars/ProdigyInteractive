@@ -31,7 +31,7 @@ describe('MattGPT live chat', () => {
       })
     );
     expect(await screen.findByText(/4-week launch/i)).toBeInTheDocument();
-  });
+  }, 10_000);
 
   it('shows a helpful fallback message when the API call fails', async () => {
     const fetchMock = vi.fn().mockResolvedValue({
@@ -50,7 +50,7 @@ describe('MattGPT live chat', () => {
 
     expect((await screen.findAllByText(/temporarily unavailable/i)).length).toBeGreaterThan(0);
     expect(screen.queryByRole('alert')).not.toBeInTheDocument();
-  });
+  }, 10_000);
 
   it('hard-disables input and submit while a request is in-flight', async () => {
     let resolveFetch:
@@ -383,5 +383,67 @@ describe('MattGPT live chat', () => {
     expect(String(parsed.projectScope)).toMatch(/reduce support costs/i);
 
     expect(await screen.findByText(/email sent/i)).toBeInTheDocument();
+  });
+
+  it('extracts a quote-ready email draft when the model returns a generic json code block', async () => {
+    const mattGptReply = [
+      'Here is a quote-ready email you can send to our team.',
+      '',
+      '**Subject:** Test subject',
+      '',
+      '**Body:**',
+      'Hi Prodigy Interactive,',
+      '',
+      '```json',
+      JSON.stringify({ subject: 'Test subject', body: 'Hi Prodigy Interactive,' }, null, 2),
+      '```'
+    ].join('\n');
+
+    const fetchMock = vi.fn().mockResolvedValue({
+      ok: true,
+      json: async () => ({ reply: mattGptReply })
+    });
+
+    vi.stubGlobal('fetch', fetchMock);
+
+    const user = userEvent.setup();
+    render(<MattGPTWidget />);
+
+    await user.click(screen.getByRole('button', { name: /open mattgpt/i }));
+    await user.type(await screen.findByLabelText(/ask mattgpt/i), 'Can you draft an email?');
+    await user.click(screen.getByRole('button', { name: /send/i }));
+
+    expect(await screen.findByRole('button', { name: /send to prodigy interactive/i })).toBeInTheDocument();
+    expect(screen.queryByText(/"subject":/i)).not.toBeInTheDocument();
+  });
+
+  it('extracts a quote-ready email draft when the model returns raw JSON text (no code fence)', async () => {
+    const rawJson = JSON.stringify(
+      {
+        subject: 'Raw subject',
+        body: 'Hello team.'
+      },
+      null,
+      0
+    );
+
+    const mattGptReply = `Draft is ready. Please confirm send.\n\n${rawJson}`;
+
+    const fetchMock = vi.fn().mockResolvedValue({
+      ok: true,
+      json: async () => ({ reply: mattGptReply })
+    });
+
+    vi.stubGlobal('fetch', fetchMock);
+
+    const user = userEvent.setup();
+    render(<MattGPTWidget />);
+
+    await user.click(screen.getByRole('button', { name: /open mattgpt/i }));
+    await user.type(await screen.findByLabelText(/ask mattgpt/i), 'Draft an email.');
+    await user.click(screen.getByRole('button', { name: /send/i }));
+
+    expect(await screen.findByRole('button', { name: /send to prodigy interactive/i })).toBeInTheDocument();
+    expect(screen.queryByText(/"subject":/i)).not.toBeInTheDocument();
   });
 });

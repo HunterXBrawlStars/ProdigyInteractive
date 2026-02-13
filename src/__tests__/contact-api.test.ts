@@ -177,6 +177,6 @@ describe('contact api', () => {
     const requestOptions = fetchMock.mock.calls[0]?.[1] as RequestInit | undefined;
     const sentPayload = JSON.parse(String(requestOptions?.body ?? '{}')) as Record<string, unknown>;
     expect(sentPayload.subject).toBe('Mobile app MVP scoping');
-    expect(String(sentPayload.text)).toMatch(/Email draft/i);
+    expect(String(sentPayload.text)).toMatch(/Conversation summary/i);
   });
 });

@@ -1,6 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import App from '../App';
+import { PortfolioSection } from '../components/sections/PortfolioSection';
 
 describe('Prodigy Interactive homepage', () => {
   it('renders core service headings', () => {
@@ -13,7 +14,7 @@ describe('Prodigy Interactive homepage', () => {
   });
 
   it('renders required portfolio and client links', async () => {
-    render(<App />);
+    render(<PortfolioSection />);
 
     expect(
       await screen.findByRole('link', { name: /brawl connections/i }, { timeout: 5000 })

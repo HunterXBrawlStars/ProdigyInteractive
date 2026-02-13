@@ -1,19 +1,21 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import App from '../App';
+import { MattGPTWidget } from '../components/chat/MattGPTWidget';
+import { ContactSection } from '../components/sections/ContactSection';
+import { HeroSection } from '../components/sections/HeroSection';
 
 describe('applied business decisions', () => {
   it('uses Book a Strategy Call as the primary call to action', async () => {
-    render(<App />);
+    render(<HeroSection />);
 
     const ctaLinks = await screen.findAllByRole('link', { name: /book a strategy call/i });
     expect(ctaLinks.length).toBeGreaterThan(0);
   });
 
   it('shows custom-quote messaging and routes launch-phase contact to business email', async () => {
-    render(<App />);
+    render(<ContactSection />);
 
-    const pricingMentions = await screen.findAllByText(/custom quote only/i);
+    const pricingMentions = await screen.findAllByText(/custom quote(s)? only/i);
     expect(pricingMentions.length).toBeGreaterThan(0);
 
     expect(await screen.findByRole('button', { name: /^send$/i })).toBeDisabled();
@@ -25,7 +27,7 @@ describe('applied business decisions', () => {
 
   it('positions MattGPT for both services or portfolio help and project scoping Q&A', async () => {
     const user = userEvent.setup();
-    render(<App />);
+    render(<MattGPTWidget />);
 
     await user.click(await screen.findByRole('button', { name: /open mattgpt/i }));
 

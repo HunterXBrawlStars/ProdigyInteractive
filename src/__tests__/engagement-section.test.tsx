@@ -1,13 +1,13 @@
 import { render, screen } from '@testing-library/react';
-import App from '../App';
+import { EngagementSection } from '../components/sections/EngagementSection';
 
 describe('engagement section', () => {
   it('renders engagement models for prospective clients', async () => {
-    render(<App />);
+    render(<EngagementSection />);
 
-    expect(await screen.findByText(/engagement models/i)).toBeInTheDocument();
-    expect(await screen.findByText('Sprint Build')).toBeInTheDocument();
-    expect(await screen.findByText('Product Launch')).toBeInTheDocument();
-    expect(await screen.findByText('Growth Partner')).toBeInTheDocument();
+    expect(screen.getByText(/engagement models/i)).toBeInTheDocument();
+    expect(screen.getByText('Sprint Build')).toBeInTheDocument();
+    expect(screen.getByText('Product Launch')).toBeInTheDocument();
+    expect(screen.getByText('Growth Partner')).toBeInTheDocument();
   });
 });

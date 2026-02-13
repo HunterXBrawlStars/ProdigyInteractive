@@ -159,7 +159,7 @@ export default async function handler(req, res) {
 
   const subject = requestedSubject || `New inquiry: ${name}${company ? ` (${company})` : ''}`;
   const userAgent = typeof req?.headers?.['user-agent'] === 'string' ? req.headers['user-agent'] : '';
-  const messageLabel = isMattGpt ? 'Email draft:' : 'Project scope:';
+  const messageLabel = isMattGpt ? 'Conversation summary:' : 'Project scope:';
   const text = [
     isMattGpt ? 'New inquiry (MattGPT)' : 'New website inquiry',
     '',

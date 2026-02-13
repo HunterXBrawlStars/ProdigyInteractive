@@ -130,43 +130,139 @@ function createInitialMessages(): MattGptMessage[] {
 }
 
 function extractEmailDraft(markdown: string): { cleaned: string; draft: MattGptEmailDraft | null } {
-  const pattern = /```mattgpt_email\s*\n([\s\S]*?)\n```/i;
-  const match = markdown.match(pattern);
-  if (!match) {
-    return { cleaned: markdown, draft: null };
+  const fencePattern = /```([a-z0-9_-]*)\s*\r?\n([\s\S]*?)\r?\n```/gi;
+
+  const tryParseDraft = (rawJson: string): MattGptEmailDraft | null => {
+    if (!rawJson) {
+      return null;
+    }
+
+    const normalized = rawJson.trim();
+    if (!normalized.startsWith('{') || !normalized.endsWith('}')) {
+      return null;
+    }
+
+    try {
+      const parsed = JSON.parse(normalized) as unknown;
+      if (
+        parsed &&
+        typeof parsed === 'object' &&
+        'subject' in parsed &&
+        'body' in parsed &&
+        typeof (parsed as { subject: unknown }).subject === 'string' &&
+        typeof (parsed as { body: unknown }).body === 'string'
+      ) {
+        return {
+          subject: (parsed as { subject: string }).subject.trim(),
+          body: (parsed as { body: string }).body.trim()
+        };
+      }
+    } catch {
+      return null;
+    }
+
+    return null;
+  };
+
+  const tryExtractRawJsonObjectDraft = (text: string): { cleaned: string; draft: MattGptEmailDraft | null } => {
+    let inString = false;
+    let escape = false;
+    const stack: number[] = [];
+
+    let bestDraft: MattGptEmailDraft | null = null;
+    let bestStart = -1;
+    let bestEnd = -1;
+
+    for (let index = 0; index < text.length; index += 1) {
+      const char = text[index];
+
+      if (inString) {
+        if (escape) {
+          escape = false;
+          continue;
+        }
+
+        if (char === '\\\\') {
+          escape = true;
+          continue;
+        }
+
+        if (char === '"') {
+          inString = false;
+        }
+
+        continue;
+      }
+
+      if (char === '"') {
+        inString = true;
+        continue;
+      }
+
+      if (char === '{') {
+        stack.push(index);
+        continue;
+      }
+
+      if (char === '}' && stack.length > 0) {
+        const start = stack.pop();
+        if (typeof start !== 'number') {
+          continue;
+        }
+
+        const candidate = text.slice(start, index + 1);
+        const parsedDraft = tryParseDraft(candidate);
+        if (parsedDraft) {
+          bestDraft = parsedDraft;
+          bestStart = start;
+          bestEnd = index + 1;
+        }
+      }
+    }
+
+    if (!bestDraft || bestStart < 0 || bestEnd < 0) {
+      return { cleaned: text, draft: null };
+    }
+
+    const cleaned = `${text.slice(0, bestStart)}${text.slice(bestEnd)}`
+      .replace(/\n{3,}/g, '\n\n')
+      .trim();
+    return { cleaned, draft: bestDraft };
+  };
+
+  let lastMatch: RegExpExecArray | null = null;
+  let lastDraft: MattGptEmailDraft | null = null;
+
+  let match = fencePattern.exec(markdown);
+  while (match) {
+    const raw = match[2]?.trim() ?? '';
+    const candidate = tryParseDraft(raw);
+    if (candidate) {
+      lastMatch = match;
+      lastDraft = candidate;
+    }
+    match = fencePattern.exec(markdown);
   }
 
-  const rawJson = match[1]?.trim() ?? '';
-  if (!rawJson) {
-    return { cleaned: markdown.replace(pattern, '').trim(), draft: null };
+  if (!lastMatch || !lastDraft) {
+    return tryExtractRawJsonObjectDraft(markdown);
   }
 
   try {
-    const parsed = JSON.parse(rawJson) as unknown;
-    if (
-      parsed &&
-      typeof parsed === 'object' &&
-      'subject' in parsed &&
-      'body' in parsed &&
-      typeof (parsed as { subject: unknown }).subject === 'string' &&
-      typeof (parsed as { body: unknown }).body === 'string'
-    ) {
-      const draft: MattGptEmailDraft = {
-        subject: (parsed as { subject: string }).subject.trim(),
-        body: (parsed as { body: string }).body.trim()
-      };
-
-      const cleaned = markdown
-        .replace(pattern, '')
-        .replace(/\n{3,}/g, '\n\n')
-        .trim();
-      return { cleaned, draft };
+    const startIndex = typeof lastMatch.index === 'number' ? lastMatch.index : -1;
+    if (startIndex < 0) {
+      return { cleaned: markdown, draft: null };
     }
-  } catch {
-    // Ignore JSON parse issues and fall back to rendering the original content.
-  }
 
-  return { cleaned: markdown, draft: null };
+    const endIndex = startIndex + lastMatch[0].length;
+    const cleaned = `${markdown.slice(0, startIndex)}${markdown.slice(endIndex)}`
+      .replace(/\n{3,}/g, '\n\n')
+      .trim();
+
+    return { cleaned, draft: lastDraft };
+  } catch {
+    return { cleaned: markdown, draft: null };
+  }
 }
 
 function createInputFieldName(): string {
