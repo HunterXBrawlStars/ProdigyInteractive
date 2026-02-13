@@ -19,8 +19,8 @@ export const navLinks = [
 ] as const;
 
 export const primaryCtaLabel = 'Book a Strategy Call';
-export const pricingPolicyLabel = 'Custom quote only';
-export const contactRoutingEmail = 'mhunter.locus@gmail.com';
+export const pricingPolicyLabel = 'Custom quotes only';
+export const contactRoutingEmail = 'mhunter@prodigyinteractive.io';
 
 export const services: ServiceItem[] = [
   {
@@ -44,7 +44,7 @@ export const services: ServiceItem[] = [
   {
     title: 'AI Integration & Technical Consulting',
     description:
-      'Implement practical AI across sales, support, and operations to reduce manual work, speed delivery, and lower recurring costs.',
+      'Implement practical AI across sales, support, and operations to reduce manual work and lower recurring costs.',
     outcomes: ['Workflow automation roadmap', 'AI tooling + implementation plan', 'Measured time and cost savings']
   },
   {
@@ -103,6 +103,20 @@ export const portfolioItems: PortfolioItem[] = [
     href: 'https://thepodcasttrailer.com/',
     category: 'clients',
     tags: ['Client', 'Brand Site']
+  },
+  {
+    title: 'VotE (Title not revealed)',
+    description: 'Upcoming Mobile & PC Game, inspired by Path of Exile & Pokemon.',
+    href: '',
+    category: 'experiments',
+    tags: ['Video Game', 'RPG']
+  },
+  {
+    title: 'Unannounced Title',
+    description: 'Upcoming Mobile & PC Game, inspired by Hearthstone & Warcraft.',
+    href: '',
+    category: 'experiments',
+    tags: ['Video Game', 'RPG']
   }
 ];
 
@@ -178,7 +192,7 @@ export const localSignals: LocalSignal[] = [
   {
     label: 'Focused on efficiency gains',
     detail:
-      'AI and automation recommendations prioritize real outcomes like faster workflows, lower manual effort, and measurable operating cost savings.'
+      'AI and automation recommendations prioritize real outcomes such as faster workflows, lower manual effort, and measurable operating cost savings.'
   }
 ];
 
@@ -209,7 +223,7 @@ export const teamStubs: TeamMemberStub[] = [
   {
     displayName: 'Bailey Blomberg',
     role: 'Lead Design Consultant',
-    note: 'Bailey brings refined taste and intentional design to every project. With a background in interior design and bridal hair and makeup, she understands how aesthetics shape experience. She ensures that every product feels elevated, cohesive, and thoughtfully curated. And yes — she’s Matthew’s wife… though she was hired for her eye long before that title applied.'
+    note: 'Bailey brings refined taste and intentional design to every project. With a background in modern interior design and artistry, she understands how aesthetics shape experience. She ensures that every product feels elevated, cohesive, and thoughtfully curated.'
   },
   {
     displayName: 'Jakub Terlaga',
@@ -253,11 +267,15 @@ export const faqItems: FaqItem[] = [
   {
     question: 'Is MattGPT live yet?',
     answer:
-      'Not yet. The current site includes a stubbed MattGPT interface that will connect to ChatGPT later.'
+      'Yes. MattGPT is live and can help with services questions, portfolio guidance, and project scoping conversations.'
   }
 ];
 
-export const heroFocuses = ['Web Design', 'Mobile Apps', 'Technical Consulting', 'AI Integration'] as const;
+export const heroFocusesDesktop = ['Web Design', 'Mobile Apps', 'Technical Consulting', 'AI Integration'] as const;
+export const heroFocusesMobile = [
+  'Web Design', 'Technical Consulting', 'Mobile Apps'
+] as const;
+export const heroFocuses = heroFocusesDesktop;
 
 export const mattGptIntro =
-  'MattGPT will support both services-and-portfolio guidance and project scoping Q&A. ChatGPT integration is coming soon.';
+  'MattGPT is live for services and portfolio guidance, plus project scoping Q&A.';

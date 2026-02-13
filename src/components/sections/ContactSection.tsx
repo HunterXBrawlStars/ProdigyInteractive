@@ -3,7 +3,7 @@ import { contactRoutingEmail, pricingPolicyLabel, primaryCtaLabel } from '../../
 
 export function ContactSection() {
   return (
-    <Box component="section" id="contact" sx={{ py: { xs: 8, md: 10 } }}>
+    <Box component="section" id="contact" sx={{ py: { xs: 4, md: 10 } }}>
       <Container maxWidth="lg">
         <Box className="glass-panel" sx={{ p: { xs: 2.5, md: 4 } }}>
           <Typography className="section-eyebrow">Contact</Typography>

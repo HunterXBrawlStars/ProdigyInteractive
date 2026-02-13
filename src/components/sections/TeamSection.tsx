@@ -3,11 +3,18 @@ import { teamStubs } from '../../content/siteContent';
 
 export function TeamSection() {
   return (
-    <Box component="section" id="team" sx={{ py: { xs: 8, md: 10 } }}>
+    <Box component="section" id="team" sx={{ py: { xs: 4, md: 10 } }}>
       <Container maxWidth="xl">
-        <Typography className="section-eyebrow">Team</Typography>
-        <Typography className="section-title" sx={{ mb: 2 }}>
-          Team profiles coming soon.
+        <Typography className="section-eyebrow">The Team</Typography>
+        <Typography className="section-title"
+          sx={{
+            fontSize: { xs: '2rem', md: '3.2rem' },
+            lineHeight: 1.03,
+            mb: 2,
+            maxWidth: { xs: '19ch', md: '21ch' }
+          }}
+        >
+          Know who you're working with.
         </Typography>
 
         <Box

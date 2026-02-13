@@ -5,13 +5,20 @@ import { triggerHaptic } from '../../lib/haptics';
 
 export function EngagementSection() {
   return (
-    <Box component="section" id="engagement" sx={{ py: { xs: 8, md: 10 } }}>
+    <Box component="section" id="engagement" sx={{ py: { xs: 4, md: 10 } }}>
       <Container maxWidth="xl">
-        <Typography className="section-eyebrow">Engagement</Typography>
-        <Typography className="section-title" sx={{ mb: 2 }}>
+        <Typography className="section-title"
+          variant="h1"
+          sx={{
+            fontSize: { xs: '1.6rem', md: '3.2rem' },
+            lineHeight: 1.03,
+            mb: 2,
+            maxWidth: { xs: '19ch', md: '21ch' }
+          }}
+        >
           Engagement Models
         </Typography>
-        <Typography sx={{ color: 'var(--pi-muted)', mb: 4, maxWidth: '66ch' }}>
+        <Typography sx={{ color: 'var(--pi-muted)', mb: 1, maxWidth: '66ch' }}>
           Choose the collaboration model that best fits your scope, timeline, and growth goals.
         </Typography>
         <Typography sx={{ color: 'var(--pi-cyan)', mb: 3, fontWeight: 700 }}>

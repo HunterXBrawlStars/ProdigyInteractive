@@ -99,7 +99,7 @@ a {
   color: var(--pi-cyan);
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  font-size: 0.79rem;
+  font-size: 0.89rem;
   font-weight: 700;
   margin-bottom: 0.5rem;
 }
@@ -152,6 +152,7 @@ a {
 }
 
 @media (prefers-reduced-motion: reduce) {
+
   *,
   *::before,
   *::after {

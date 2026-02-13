@@ -23,17 +23,30 @@ export function PortfolioSection() {
   );
 
   return (
-    <Box component="section" id="portfolio" sx={{ py: { xs: 8, md: 10 } }}>
+    <Box component="section" id="portfolio" sx={{ py: { xs: 4, md: 10 } }}>
       <Container maxWidth="xl">
-        <Typography className="section-eyebrow">Portfolio</Typography>
-        <Typography className="section-title" sx={{ mb: 2 }}>
+        <Typography className="section-title"
+          sx={{
+            fontSize: { xs: '2rem', md: '3.2rem' },
+            lineHeight: 1.03,
+            mb: 2,
+            maxWidth: { xs: '19ch', md: '21ch' }
+          }}>
           Products and client launches.
         </Typography>
         <Typography sx={{ color: 'var(--pi-muted)', mb: 4, maxWidth: '66ch' }}>
           Real projects spanning community products, analytics tools, and client websites.
         </Typography>
 
-        <Stack direction="row" spacing={1} flexWrap="wrap" useFlexGap sx={{ mb: 3 }}>
+        <Box
+          sx={{
+            mb: 3,
+            display: { xs: 'grid', sm: 'flex' },
+            gridTemplateColumns: { xs: 'repeat(2, minmax(0, 1fr))', sm: 'none' },
+            gap: 1,
+            flexWrap: { sm: 'wrap' }
+          }}
+        >
           {portfolioFilters.map((filter) => (
             <Button
               key={filter.id}
@@ -42,20 +55,29 @@ export function PortfolioSection() {
               color="primary"
               onPointerDown={() => triggerHaptic('light')}
               onClick={() => setActiveFilter(filter.id)}
-              sx={{ textTransform: 'none', borderRadius: 999, px: 1.8 }}
+              sx={{
+                textTransform: 'none',
+                borderRadius: 999,
+                width: { xs: '100%', sm: 'auto' },
+                px: { xs: 1, sm: 1.8 },
+                py: { xs: 0.55, sm: 0.625 },
+                minHeight: { xs: 34, sm: 36 },
+                fontSize: { xs: '0.78rem', sm: '0.8125rem' }
+              }}
             >
               {filter.label}
             </Button>
           ))}
-        </Stack>
+        </Box>
 
         <Box
           sx={{
             display: { xs: 'flex', md: 'grid' },
             gridTemplateColumns: { md: 'repeat(2, minmax(0, 1fr))' },
             overflowX: { xs: 'auto', md: 'visible' },
+            overflowY: { xs: 'hidden', md: 'visible' },
             scrollSnapType: { xs: 'x mandatory', md: 'none' },
-            pb: { xs: 1, md: 0 },
+            pb: { xs: 0.5, md: 0 },
             gap: 2
           }}
         >
@@ -72,29 +94,29 @@ export function PortfolioSection() {
               onPointerDown={() => triggerHaptic('light')}
               tabIndex={0}
               sx={{
-                p: 2.4,
+                p: { xs: 2.1, md: 2.4 },
                 minWidth: { xs: '85vw', sm: '72vw', md: 'unset' },
                 scrollSnapAlign: { xs: 'start', md: 'unset' }
               }}
             >
-              <Stack direction="row" justifyContent="space-between" alignItems="flex-start" spacing={2}>
-                <Box>
+              <Stack spacing={1.1}>
+                <Stack direction="row" justifyContent="space-between" alignItems="flex-start" spacing={1.5}>
                   <Link
                     href={item.href}
                     target="_blank"
                     rel="noreferrer"
                     onPointerDown={() => triggerHaptic('medium')}
-                    sx={{ fontWeight: 700, fontSize: '1.05rem' }}
+                    sx={{ fontWeight: 700, fontSize: '1.05rem', flex: 1, minWidth: 0 }}
                   >
                     {item.title}
                   </Link>
-                  <Typography sx={{ color: 'var(--pi-muted)', mt: 1 }}>{item.description}</Typography>
-                </Box>
-                <Chip
-                  label={item.category}
-                  size="small"
-                  sx={{ textTransform: 'capitalize', border: '1px solid var(--pi-border)' }}
-                />
+                  <Chip
+                    label={item.category}
+                    size="small"
+                    sx={{ textTransform: 'capitalize', border: '1px solid var(--pi-border)', flexShrink: 0 }}
+                  />
+                </Stack>
+                <Typography sx={{ color: 'var(--pi-muted)' }}>{item.description}</Typography>
               </Stack>
 
               <Stack direction="row" spacing={1} flexWrap="wrap" useFlexGap sx={{ mt: 2 }}>

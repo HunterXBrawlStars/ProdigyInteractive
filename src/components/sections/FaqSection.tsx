@@ -4,10 +4,17 @@ import { faqItems } from '../../content/siteContent';
 
 export function FaqSection() {
   return (
-    <Box component="section" sx={{ py: { xs: 7, md: 9 } }}>
+    <Box component="section" sx={{ py: { xs: 4, md: 9 } }}>
       <Container maxWidth="lg">
         <Typography className="section-eyebrow">FAQ</Typography>
-        <Typography className="section-title" sx={{ mb: 3 }}>
+        <Typography className="section-title"
+          sx={{
+            fontSize: { xs: '2rem', md: '3.2rem' },
+            lineHeight: 1.03,
+            mb: 2,
+            maxWidth: { xs: '19ch', md: '21ch' }
+          }}
+        >
           Quick answers before we talk.
         </Typography>
 

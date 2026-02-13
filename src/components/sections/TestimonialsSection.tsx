@@ -3,7 +3,7 @@ import { testimonialStubs } from '../../content/siteContent';
 
 export function TestimonialsSection() {
   return (
-    <Box component="section" sx={{ py: { xs: 8, md: 10 } }}>
+    <Box component="section" sx={{ py: { xs: 4, md: 10 } }}>
       <Container maxWidth="xl">
         <Typography className="section-eyebrow">Proof</Typography>
         <Typography className="section-title" sx={{ mb: 3 }}>

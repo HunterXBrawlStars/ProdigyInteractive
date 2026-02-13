@@ -3,6 +3,7 @@ import { lazy, Suspense } from 'react';
 import { AmbientBackground } from './components/effects/AmbientBackground';
 import { ScrollProgressIndicator } from './components/layout/ScrollProgressIndicator';
 import { SiteHeader } from './components/layout/SiteHeader';
+import { MattGPTWidget } from './components/chat/MattGPTWidget';
 import { HeroSection } from './components/sections/HeroSection';
 import { LocalPresenceSection } from './components/sections/LocalPresenceSection';
 import { ServicesSection } from './components/sections/ServicesSection';
@@ -30,9 +31,6 @@ const SiteFooter = lazy(() =>
 );
 const MobileQuickDock = lazy(() =>
   import('./components/layout/MobileQuickDock').then((module) => ({ default: module.MobileQuickDock }))
-);
-const MattGPTWidget = lazy(() =>
-  import('./components/chat/MattGPTWidget').then((module) => ({ default: module.MattGPTWidget }))
 );
 
 function DeferredSectionFallback() {
@@ -73,8 +71,8 @@ function App() {
 
       <Suspense fallback={null}>
         <MobileQuickDock />
-        <MattGPTWidget />
       </Suspense>
+      <MattGPTWidget />
     </Box>
   );
 }

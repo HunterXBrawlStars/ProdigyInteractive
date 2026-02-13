@@ -5,10 +5,17 @@ import { triggerHaptic } from '../../lib/haptics';
 
 export function ServicesSection() {
   return (
-    <Box component="section" id="services" sx={{ py: { xs: 8, md: 10 } }}>
+    <Box component="section" id="services" sx={{ pt: { xs: 0, md: 10 }, pb: { xs: 4, md: 10 } }}>
       <Container maxWidth="xl">
         <Typography className="section-eyebrow">Services</Typography>
-        <Typography className="section-title" sx={{ mb: 4 }}>
+        <Typography className="section-title"
+          sx={{
+            fontSize: { xs: '2rem', md: '3.2rem' },
+            lineHeight: 1.03,
+            mb: 2,
+            maxWidth: { xs: '19ch', md: '21ch' }
+          }}
+        >
           End-to-end digital execution.
         </Typography>
 
@@ -17,8 +24,9 @@ export function ServicesSection() {
             display: { xs: 'flex', md: 'grid' },
             gridTemplateColumns: { md: 'repeat(2, minmax(0, 1fr))', xl: 'repeat(3, minmax(0, 1fr))' },
             overflowX: { xs: 'auto', md: 'visible' },
+            overflowY: { xs: 'hidden', md: 'visible' },
             scrollSnapType: { xs: 'x mandatory', md: 'none' },
-            pb: { xs: 1, md: 0 },
+            pb: { xs: 0.5, md: 0 },
             gap: 2
           }}
         >
@@ -35,7 +43,7 @@ export function ServicesSection() {
               onPointerDown={() => triggerHaptic('light')}
               tabIndex={0}
               sx={{
-                p: 2.6,
+                p: { xs: 2.1, md: 2.6 },
                 minWidth: { xs: '84vw', sm: '70vw', md: 'unset' },
                 scrollSnapAlign: { xs: 'start', md: 'unset' }
               }}

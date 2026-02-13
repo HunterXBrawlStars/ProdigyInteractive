@@ -3,11 +3,18 @@ import { processSteps } from '../../content/siteContent';
 
 export function ProcessSection() {
   return (
-    <Box component="section" id="process" sx={{ py: { xs: 8, md: 10 } }}>
+    <Box component="section" id="process" sx={{ py: { xs: 4, md: 10 } }}>
       <Container maxWidth="xl">
-        <Typography className="section-eyebrow">Process</Typography>
-        <Typography className="section-title" sx={{ mb: 4 }}>
-          Fast loops, clear ownership, measurable outcomes.
+        <Typography className="section-eyebrow">The Process</Typography>
+        <Typography className="section-title"
+          sx={{
+            fontSize: { xs: '2rem', md: '3.2rem' },
+            lineHeight: 1.03,
+            mb: 2,
+            maxWidth: { xs: '19ch', md: '21ch' }
+          }}
+        >
+          Quick iterations, clear ownership, measurable outcomes.
         </Typography>
 
         <Box

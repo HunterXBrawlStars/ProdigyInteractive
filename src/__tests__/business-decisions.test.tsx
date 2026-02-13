@@ -17,9 +17,9 @@ describe('applied business decisions', () => {
     expect(pricingMentions.length).toBeGreaterThan(0);
 
     expect(await screen.findByRole('button', { name: /form integration in progress/i })).toBeDisabled();
-    expect(await screen.findByRole('link', { name: /mhunter\.locus@gmail\.com/i })).toHaveAttribute(
+    expect(await screen.findByRole('link', { name: /mhunter@prodigyinteractive\.io/i })).toHaveAttribute(
       'href',
-      'mailto:mhunter.locus@gmail.com'
+      'mailto:mhunter@prodigyinteractive.io'
     );
   });
 

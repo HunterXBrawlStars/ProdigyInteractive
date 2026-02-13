@@ -4,11 +4,25 @@ import { aiAnswerItems, localSignals } from '../../content/siteContent';
 
 export function LocalPresenceSection() {
   return (
-    <Box component="section" id="local-presence" sx={{ py: { xs: 8, md: 10 } }}>
+    <Box component="section" id="local-presence" sx={{ py: { xs: 4, md: 10 } }}>
       <Container maxWidth="xl">
-        <Typography className="section-eyebrow">Local Presence</Typography>
-        <Typography component="h2" variant="h2" className="section-title" sx={{ mb: 2 }}>
-          Local Partner, National Reach
+        <Typography
+          component="h2"
+          variant="h2"
+          className="section-title"
+          aria-label="Local Partner, National Reach"
+          sx={{
+            fontSize: { xs: '2rem', md: '3.2rem' },
+            lineHeight: 1.03,
+            mb: 2,
+            maxWidth: { xs: '19ch', md: '21ch' }
+          }}
+        >
+          Local Partner,
+          <Box component="span" sx={{ display: { xs: 'block', sm: 'inline' } }}>
+            {' '}
+            National Reach
+          </Box>
         </Typography>
         <Typography sx={{ color: 'var(--pi-muted)', mb: 4, maxWidth: '70ch' }}>
           Prodigy Interactive helps growth-focused businesses launch and scale websites, apps, and interactive

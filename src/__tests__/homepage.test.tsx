@@ -35,14 +35,14 @@ describe('Prodigy Interactive homepage', () => {
     ).toHaveAttribute('href', 'https://thepodcasttrailer.com/');
   });
 
-  it('opens MattGPT stub panel', async () => {
+  it('opens MattGPT panel', async () => {
     const user = userEvent.setup();
     render(<App />);
 
     await user.click(await screen.findByRole('button', { name: /open mattgpt/i }));
 
     expect(await screen.findByRole('heading', { name: /mattgpt/i })).toBeInTheDocument();
-    expect(await screen.findByText(/services-and-portfolio guidance/i)).toBeInTheDocument();
+    expect(await screen.findByText(/services and portfolio guidance/i)).toBeInTheDocument();
   });
 
   it('shows launch-phase contact guidance and direct email while form is disabled', async () => {
@@ -50,9 +50,9 @@ describe('Prodigy Interactive homepage', () => {
 
     expect(await screen.findByText(/we just launched this site/i)).toBeInTheDocument();
     expect(await screen.findByRole('button', { name: /form integration in progress/i })).toBeDisabled();
-    expect(await screen.findByRole('link', { name: /mhunter\.locus@gmail\.com/i })).toHaveAttribute(
+    expect(await screen.findByRole('link', { name: /mhunter@prodigyinteractive\.io/i })).toHaveAttribute(
       'href',
-      'mailto:mhunter.locus@gmail.com'
+      'mailto:mhunter@prodigyinteractive.io'
     );
   });
 });

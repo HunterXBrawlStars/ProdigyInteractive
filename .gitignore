@@ -6,3 +6,6 @@ playwright-report
 test-results
 .vscode
 *.tsbuildinfo
+.env
+.env.*
+!.env.example

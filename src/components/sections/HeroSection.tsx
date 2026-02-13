@@ -1,9 +1,13 @@
-import { Box, Button, Chip, Container, Stack, Typography } from '@mui/material';
+import { Box, Button, Chip, Container, Stack, Typography, useMediaQuery, useTheme } from '@mui/material';
 import { motion } from 'framer-motion';
-import { heroFocuses, primaryCtaLabel } from '../../content/siteContent';
+import { heroFocusesDesktop, heroFocusesMobile, primaryCtaLabel } from '../../content/siteContent';
 import { triggerHaptic } from '../../lib/haptics';
 
 export function HeroSection() {
+  const theme = useTheme();
+  const isXlUp = useMediaQuery(theme.breakpoints.up('xl'));
+  const heroFocuses = isXlUp ? heroFocusesDesktop : heroFocusesMobile;
+
   const horizontalEdgeFade =
     'linear-gradient(to right, rgba(0,0,0,0) 0%, rgba(0,0,0,0.24) 6%, rgba(0,0,0,0.68) 11%, rgba(0,0,0,0.92) 14%, rgba(0,0,0,1) 18%, rgba(0,0,0,1) 82%, rgba(0,0,0,0.92) 86%, rgba(0,0,0,0.68) 89%, rgba(0,0,0,0.24) 94%, rgba(0,0,0,0) 100%)';
   const verticalEdgeFade =
@@ -13,7 +17,7 @@ export function HeroSection() {
   const blendedEdgeMask = `${horizontalEdgeFade}, ${verticalEdgeFade}, ${cornerSoftening}`;
 
   return (
-    <Box component="section" id="home" sx={{ pt: { xs: 14, md: 17 }, pb: { xs: 8, md: 10 } }}>
+    <Box component="section" id="home" sx={{ pt: { xs: 14, md: 20 }, pb: { xs: 8, md: 20 } }}>
       <Container maxWidth="xl">
         <Stack direction={{ xs: 'column', lg: 'row' }} spacing={6} alignItems={{ lg: 'center' }}>
           <Box
@@ -75,7 +79,7 @@ export function HeroSection() {
                 position: 'relative',
                 zIndex: 2,
                 justifyContent: 'center',
-                mt: { xs: -7, md: -9 }
+                mt: { xs: -3, md: -9 }
               }}
             >
               {heroFocuses.map((focus) => (
@@ -103,15 +107,15 @@ export function HeroSection() {
             <Typography
               variant="h1"
               sx={{
-                fontSize: { xs: '2rem', md: '3.2rem' },
+                fontSize: { xs: '1.6rem', md: '3.2rem' },
                 lineHeight: 1.03,
                 mb: 2,
-                maxWidth: { xs: '16ch', md: '21ch' }
+                maxWidth: { xs: '19ch', md: '21ch' }
               }}
             >
               Ultra-modern products for ambitious businesses.
             </Typography>
-            <Typography sx={{ color: 'var(--pi-muted)', maxWidth: '60ch', mb: 3, fontSize: '1.05rem' }}>
+            <Typography sx={{ color: 'var(--pi-muted)', maxWidth: '60ch', mb: 5, fontSize: '1.05rem' }}>
               Launch websites, apps, games, and practical AI systems that win more customers, remove manual
               bottlenecks, and reduce operating costs.
             </Typography>
