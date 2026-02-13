@@ -9,3 +9,6 @@ test-results
 .env
 .env.*
 !.env.example
+
+# Never commit backup codes / secrets.
+*backup_codes*.txt
