@@ -1,8 +1,29 @@
 import { Box, Button, Stack } from '@mui/material';
+import { type MouseEvent as ReactMouseEvent } from 'react';
 import { MdMailOutline, MdRocketLaunch, MdWorkOutline } from 'react-icons/md';
 import { triggerHaptic } from '../../lib/haptics';
+import { scrollToHash } from '../../lib/scrollToHash';
 
 export function MobileQuickDock() {
+  const handleHashNavigation = (event: ReactMouseEvent<HTMLElement>, href: string) => {
+    if (!href.startsWith('#')) {
+      return;
+    }
+
+    // Allow new-tab / new-window behaviors (middle click, Cmd/Ctrl click).
+    if (event.button !== 0 || event.metaKey || event.altKey || event.ctrlKey || event.shiftKey) {
+      return;
+    }
+
+    const id = decodeURIComponent(href.slice(1));
+    if (!id || !document.getElementById(id)) {
+      return;
+    }
+
+    event.preventDefault();
+    scrollToHash(href);
+  };
+
   return (
     <Box
       sx={{
@@ -33,6 +54,7 @@ export function MobileQuickDock() {
           size="small"
           component="a"
           href="#services"
+          onClick={(event) => handleHashNavigation(event, '#services')}
           startIcon={<MdRocketLaunch />}
           onPointerDown={() => triggerHaptic('light')}
           sx={{ textTransform: 'none', borderRadius: 999 }}
@@ -44,6 +66,7 @@ export function MobileQuickDock() {
           size="small"
           component="a"
           href="#portfolio"
+          onClick={(event) => handleHashNavigation(event, '#portfolio')}
           startIcon={<MdWorkOutline />}
           onPointerDown={() => triggerHaptic('light')}
           sx={{ textTransform: 'none', borderRadius: 999 }}
@@ -55,6 +78,7 @@ export function MobileQuickDock() {
           size="small"
           component="a"
           href="#contact"
+          onClick={(event) => handleHashNavigation(event, '#contact')}
           startIcon={<MdMailOutline />}
           onPointerDown={() => triggerHaptic('medium')}
           sx={{ textTransform: 'none', borderRadius: 999 }}

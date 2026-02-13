@@ -1,12 +1,33 @@
 import { Box, Button, Chip, Container, Stack, Typography, useMediaQuery, useTheme } from '@mui/material';
 import { motion } from 'framer-motion';
+import { type MouseEvent as ReactMouseEvent } from 'react';
 import { heroFocusesDesktop, heroFocusesMobile, primaryCtaLabel } from '../../content/siteContent';
 import { triggerHaptic } from '../../lib/haptics';
+import { scrollToHash } from '../../lib/scrollToHash';
 
 export function HeroSection() {
   const theme = useTheme();
   const isXlUp = useMediaQuery(theme.breakpoints.up('xl'));
   const heroFocuses = isXlUp ? heroFocusesDesktop : heroFocusesMobile;
+
+  const handleHashNavigation = (event: ReactMouseEvent<HTMLElement>, href: string) => {
+    if (!href.startsWith('#')) {
+      return;
+    }
+
+    // Allow new-tab / new-window behaviors (middle click, Cmd/Ctrl click).
+    if (event.button !== 0 || event.metaKey || event.altKey || event.ctrlKey || event.shiftKey) {
+      return;
+    }
+
+    const id = decodeURIComponent(href.slice(1));
+    if (!id || !document.getElementById(id)) {
+      return;
+    }
+
+    event.preventDefault();
+    scrollToHash(href);
+  };
 
   const horizontalEdgeFade =
     'linear-gradient(to right, rgba(0,0,0,0) 0%, rgba(0,0,0,0.24) 6%, rgba(0,0,0,0.68) 11%, rgba(0,0,0,0.92) 14%, rgba(0,0,0,1) 18%, rgba(0,0,0,1) 82%, rgba(0,0,0,0.92) 86%, rgba(0,0,0,0.68) 89%, rgba(0,0,0,0.24) 94%, rgba(0,0,0,0) 100%)';
@@ -125,6 +146,7 @@ export function HeroSection() {
                 color="primary"
                 component="a"
                 href="#contact"
+                onClick={(event) => handleHashNavigation(event, '#contact')}
                 onPointerDown={() => triggerHaptic('medium')}
                 sx={{
                   py: 1.2,
@@ -140,6 +162,7 @@ export function HeroSection() {
                 variant="outlined"
                 component="a"
                 href="#portfolio"
+                onClick={(event) => handleHashNavigation(event, '#portfolio')}
                 onPointerDown={() => triggerHaptic('light')}
                 sx={{ py: 1.2, px: 2.4, textTransform: 'none' }}
               >

@@ -11,13 +11,33 @@ import {
   Typography
 } from '@mui/material';
 import { motion } from 'framer-motion';
-import { useState } from 'react';
+import { useState, type MouseEvent as ReactMouseEvent } from 'react';
 import { MdMenu } from 'react-icons/md';
 import { navLinks } from '../../content/siteContent';
 import { triggerHaptic } from '../../lib/haptics';
+import { scrollToHash } from '../../lib/scrollToHash';
 
 export function SiteHeader() {
   const [mobileOpen, setMobileOpen] = useState(false);
+
+  const handleHashNavigation = (event: ReactMouseEvent<HTMLElement>, href: string) => {
+    if (!href.startsWith('#')) {
+      return;
+    }
+
+    // Allow new-tab / new-window behaviors (middle click, Cmd/Ctrl click).
+    if (event.button !== 0 || event.metaKey || event.altKey || event.ctrlKey || event.shiftKey) {
+      return;
+    }
+
+    const id = decodeURIComponent(href.slice(1));
+    if (!id || !document.getElementById(id)) {
+      return;
+    }
+
+    event.preventDefault();
+    scrollToHash(href);
+  };
 
   const openMobileMenu = () => {
     triggerHaptic('medium');
@@ -39,6 +59,7 @@ export function SiteHeader() {
         position="fixed"
         color="transparent"
         elevation={0}
+        data-pi-site-header="true"
         sx={{
           backdropFilter: 'blur(14px)',
           borderBottom: '1px solid var(--pi-border)',
@@ -67,6 +88,7 @@ export function SiteHeader() {
                   key={link.href}
                   component="a"
                   href={link.href}
+                  onClick={(event) => handleHashNavigation(event, link.href)}
                   onPointerDown={() => triggerHaptic('light')}
                   sx={{
                     color: 'var(--pi-text)',
@@ -119,7 +141,10 @@ export function SiteHeader() {
                 key={link.href}
                 component="a"
                 href={link.href}
-                onClick={onMobileNavigate}
+                onClick={(event) => {
+                  handleHashNavigation(event, link.href);
+                  onMobileNavigate();
+                }}
                 sx={{
                   borderRadius: 1.4,
                   mb: 0.7,

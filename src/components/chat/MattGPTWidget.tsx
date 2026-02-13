@@ -45,6 +45,10 @@ interface MattGptEmailDraft {
 
 type MattGptUiMessage = MattGptMessage & { emailDraft?: MattGptEmailDraft };
 
+interface MattGPTWidgetProps {
+  onOpenChange?: (open: boolean) => void;
+}
+
 function toCountdownSeconds(milliseconds: number): number {
   return Math.max(1, Math.ceil(milliseconds / 1000));
 }
@@ -330,7 +334,7 @@ function ThinkingIndicator() {
   );
 }
 
-export function MattGPTWidget() {
+export function MattGPTWidget({ onOpenChange }: MattGPTWidgetProps) {
   const [open, setOpen] = useState(false);
   const [draft, setDraft] = useState('');
   const [isSending, setIsSending] = useState(false);
@@ -417,6 +421,7 @@ export function MattGPTWidget() {
     sessionRef.current += 1;
     resetSessionState();
     setOpen(true);
+    onOpenChange?.(true);
   };
 
   const closeMattGpt = () => {
@@ -424,6 +429,7 @@ export function MattGPTWidget() {
     sessionRef.current += 1;
     resetSessionState();
     setOpen(false);
+    onOpenChange?.(false);
   };
 
   const openEmailDialog = (draftToSend: MattGptEmailDraft) => {

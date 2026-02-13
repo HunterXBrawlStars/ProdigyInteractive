@@ -69,7 +69,11 @@ export function ContactSection() {
             Let&apos;s scope your next digital product.
           </Typography>
           <Typography sx={{ color: 'var(--pi-muted)', mb: 3 }}>
-            {pricingPolicyLabel}. Use the form below or work with MattGPT to create a plan and it will send the details to our team.
+            {pricingPolicyLabel}. Use the form below or email{' '}
+            <Link href={`mailto:${contactRoutingEmail}`} color="inherit" underline="always">
+              {contactRoutingEmail}
+            </Link>
+            . If you want, MattGPT can also draft a scoping summary and send it to our team.
           </Typography>
 
           <Box component="form" onSubmit={onSubmit}>

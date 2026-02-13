@@ -1,5 +1,5 @@
 import { Box, Skeleton, Stack } from '@mui/material';
-import { lazy, Suspense } from 'react';
+import { lazy, Suspense, useState } from 'react';
 import { AmbientBackground } from './components/effects/AmbientBackground';
 import { ScrollProgressIndicator } from './components/layout/ScrollProgressIndicator';
 import { SiteHeader } from './components/layout/SiteHeader';
@@ -50,6 +50,8 @@ function DeferredSectionFallback() {
 }
 
 function App() {
+  const [isMattGptOpen, setIsMattGptOpen] = useState(false);
+
   return (
     <Box>
       <AmbientBackground />
@@ -70,9 +72,9 @@ function App() {
       </Suspense>
 
       <Suspense fallback={null}>
-        <MobileQuickDock />
+        {!isMattGptOpen ? <MobileQuickDock /> : null}
       </Suspense>
-      <MattGPTWidget />
+      <MattGPTWidget onOpenChange={setIsMattGptOpen} />
     </Box>
   );
 }

@@ -46,6 +46,18 @@ describe('Prodigy Interactive homepage', () => {
     expect(await screen.findByText(/services and portfolio guidance/i)).toBeInTheDocument();
   });
 
+  it('hides the bottom quick dock while MattGPT is open', async () => {
+    const user = userEvent.setup();
+    render(<App />);
+
+    expect(await screen.findByRole('link', { name: /^work$/i }, { timeout: 5000 })).toBeInTheDocument();
+
+    await user.click(await screen.findByRole('button', { name: /open mattgpt/i }));
+
+    expect(await screen.findByRole('heading', { name: /mattgpt/i })).toBeInTheDocument();
+    expect(screen.queryByRole('link', { name: /^work$/i, hidden: true })).not.toBeInTheDocument();
+  });
+
   it('shows contact guidance and direct email alongside the contact form', async () => {
     render(<App />);
 
