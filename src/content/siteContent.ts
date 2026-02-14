@@ -50,7 +50,7 @@ export const services: ServiceItem[] = [
   {
     title: 'Digital Marketing',
     description:
-      'Deploy conversion-focused campaigns that lower acquisition cost and turn traffic into qualified opportunities.',
+      'Deploy digital market strategies that lower your customer acquisition cost and turn views into real, qualified leads.',
     outcomes: ['Conversion funnel optimization', 'Paid + organic growth strategy', 'Attribution that reveals spend efficiency']
   },
   {
@@ -164,7 +164,7 @@ export const engagementModels: EngagementModel[] = [
   {
     title: 'Growth Partner',
     description:
-      'Ongoing collaboration to increase revenue while reducing operational drag through continuous optimization.',
+      'Month-to-month partner to ship website improvements, app features, and AI automations, with a prioritized backlog and regular releases.',
     timeline: 'Monthly',
     bestFor: 'Teams that want a consistent product and growth execution partner.',
     deliverables: ['Prioritized backlog execution', 'Conversion + retention experiments', 'AI and automation iteration loops'],
@@ -192,7 +192,7 @@ export const localSignals: LocalSignal[] = [
   {
     label: 'Engineered for AI discovery',
     detail:
-      'Content is structured so AI assistants can cite services, process, and proof points with clear factual snippets.'
+      'We structure your pages for SEO and AI search: clear service pages, structured data, and real examples people can verify.'
   },
   {
     label: 'Focused on efficiency gains',
