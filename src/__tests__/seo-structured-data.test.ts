@@ -14,6 +14,18 @@ describe('structured data and delivery workflow', () => {
     expect(html).toContain('How can I use AI in my business to cut costs?');
   });
 
+  it('keeps canonical SEO URLs aligned to the primary https www host', () => {
+    const html = readFileSync(resolve(process.cwd(), 'index.html'), 'utf8');
+    const robots = readFileSync(resolve(process.cwd(), 'public/robots.txt'), 'utf8');
+    const sitemap = readFileSync(resolve(process.cwd(), 'public/sitemap.xml'), 'utf8');
+
+    expect(html).toContain('<meta property="og:url" content="https://www.prodigyinteractive.io" />');
+    expect(html).toContain('<link rel="canonical" href="https://www.prodigyinteractive.io" />');
+    expect(robots).toContain('Host: https://www.prodigyinteractive.io');
+    expect(robots).toContain('Sitemap: https://www.prodigyinteractive.io/sitemap.xml');
+    expect(sitemap).toContain('<loc>https://www.prodigyinteractive.io/</loc>');
+  });
+
   it('defines a CI workflow that runs lint, test, and build', () => {
     const workflow = readFileSync(resolve(process.cwd(), '.github/workflows/ci.yml'), 'utf8');
 
